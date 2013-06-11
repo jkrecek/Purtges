@@ -1,0 +1,80 @@
+18:59:50,987 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+18:59:51,122 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+18:59:51,297 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\DeviceInfo.class" with enhanced definition
+18:59:51,303 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\MessageData.class" with enhanced definition
+18:59:51,306 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=139 ms, enhance=41 ms, total=180 ms. Consult the log for full details
+19:02:21,484 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:02:21,629 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:02:21,840 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\DeviceInfo.class" with enhanced definition
+19:02:21,850 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\MessageData.class" with enhanced definition
+19:02:21,855 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=168 ms, enhance=56 ms, total=224 ms. Consult the log for full details
+19:05:04,241 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:05:04,438 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:05:04,610 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\DeviceInfo.class" with enhanced definition
+19:05:04,617 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\MessageData.class" with enhanced definition
+19:05:04,621 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=138 ms, enhance=43 ms, total=181 ms. Consult the log for full details
+19:35:27,343 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:35:27,483 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:35:27,642 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+19:35:27,643 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+19:35:27,643 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=142 ms, enhance=18 ms, total=160 ms. Consult the log for full details
+19:35:49,113 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:35:49,233 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:35:49,374 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+19:35:49,375 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+19:35:49,376 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=125 ms, enhance=16 ms, total=141 ms. Consult the log for full details
+19:39:55,555 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:39:55,682 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:39:55,822 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+19:39:55,823 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+19:39:55,823 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=123 ms, enhance=17 ms, total=140 ms. Consult the log for full details
+19:42:52,333 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:42:52,465 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:42:52,612 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+19:42:52,613 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+19:42:52,613 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=130 ms, enhance=17 ms, total=147 ms. Consult the log for full details
+19:49:37,833 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:49:37,977 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:49:38,124 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+19:49:38,125 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+19:49:38,125 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=130 ms, enhance=17 ms, total=147 ms. Consult the log for full details
+19:58:29,557 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:58:29,677 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:58:29,817 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+19:58:29,818 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+19:58:29,819 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=124 ms, enhance=17 ms, total=141 ms. Consult the log for full details
+19:58:41,890 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+19:58:42,011 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+19:58:42,154 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+19:58:42,155 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+19:58:42,155 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=126 ms, enhance=17 ms, total=143 ms. Consult the log for full details
+20:00:31,896 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+20:00:32,016 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+20:00:32,156 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+20:00:32,157 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+20:00:32,157 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=124 ms, enhance=17 ms, total=141 ms. Consult the log for full details
+21:01:53,973 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+21:01:54,127 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+21:01:54,305 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\DeviceInfo.class" with enhanced definition
+21:01:54,311 (main) INFO  [DataNucleus.Enhancer] - Writing class file "D:\Dropbox\Dev\GamingSchedulerProject\GamingScheduler-AppEngine\target\GamingScheduler-AppEngine-1.0\WEB-INF\classes\com\frca\gamingscheduler\MessageData.class" with enhanced definition
+21:01:54,315 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=144 ms, enhance=43 ms, total=187 ms. Consult the log for full details
+21:06:13,751 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+21:06:13,873 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+21:06:14,014 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+21:06:14,015 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+21:06:14,016 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=124 ms, enhance=17 ms, total=141 ms. Consult the log for full details
+21:06:26,280 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+21:06:26,403 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+21:06:26,547 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+21:06:26,548 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+21:06:26,549 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=127 ms, enhance=17 ms, total=144 ms. Consult the log for full details
+21:06:55,016 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+21:06:55,147 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+21:06:55,289 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+21:06:55,290 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+21:06:55,290 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=125 ms, enhance=17 ms, total=142 ms. Consult the log for full details
+21:07:24,480 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer for API "JDO"
+21:07:24,604 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 3.1.1) : Enhancement of classes
+21:07:24,750 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.DeviceInfo" is already enhanced.
+21:07:24,751 (main) INFO  [DataNucleus.Enhancer] - Class "com.frca.gamingscheduler.MessageData" is already enhanced.
+21:07:24,751 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 2 classes. Timings : input=130 ms, enhance=17 ms, total=147 ms. Consult the log for full details

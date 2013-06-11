@@ -1,0 +1,30 @@
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/navigator"
+              android:background="@android:color/black"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingRight="@dimen/item_team_list_left">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#00f"/>
+
+    <ListView
+        android:id="@+id/list2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".FragmentMainList"
+        android:divider="#888"
+        android:dividerHeight="1px"
+        android:headerDividersEnabled="true"
+        android:footerDividersEnabled="false"/>
+
+</LinearLayout> -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>

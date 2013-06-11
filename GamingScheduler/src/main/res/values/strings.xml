@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" >GamingScheduler
+    </string>
+    <string name="action_settings" >Settings
+    </string>
+    <string name="title_section1" >Section 1
+    </string>
+    <string name="title_section2" >Section 2
+    </string>
+    <string name="title_section3" >Section 3
+    </string>
+
+    <string name="team_add">Add Team</string>
+    <string name="teams_manage">Manage Teams</string>
+    <string name="register">Register</string>
+
+    <string name="drawer_open">Opening ...</string>
+    <string name="drawer_close">Closing ...</string>
+
+    <string name="section_title_data">Data</string>
+    <string name="section_title_list">Seznam</string>
+    <string name="navigation">Navigation</string>
+
+    <!-- Test -->
+    <string name="test">Test</string>
+    <string name="team1">Team 1</string>
+    <string name="team1_members">Member, Dude &amp; Bro</string>
+    <string name="team2">Team 2</string>
+    <string name="team2_members">Me only</string>
+    <string name="team3">Team 3</string>
+    <string name="team3_members">He and his mum</string>
+
+    <string name="member1">Frantisek Vomejtka</string>
+    <string name="member1_reason">Sorrac, nemuzu jit, muj pes spadl do hnoje tak ho musim vycistit. Ale jako dal bych kdyztak zejtra jak hajzl, kdyztak hodte pak timer na 19:30, ok?</string>
+    <string name="member2">The Ultra Killer</string>
+    <string name="member2_reason">Ok man, I\'ll be there!</string>
+    <string name="member3">Agreeer</string>
+    <string name="member3_reason">OK</string>
+    <string name="member4">Trautenberg von Klobasa aus Székesfehérvár</string>
+    <string name="member4_reason"></string>
+    <string name="member5">Fuckin maybe-guy</string>
+    <string name="member5_reason">Well, I\'ll se what I can do, but I probably won\'t make it :(</string>
+
+    <string-array name="test_items">
+        <item>item1</item>
+        <item>item2</item>
+        <item>item3</item>
+        <item>item4</item>
+        <item>item5</item>
+        <item>item6</item>
+    </string-array>
+
+</resources>

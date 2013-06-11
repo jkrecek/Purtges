@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="item_team_list_height">40dp</dimen>
+    <dimen name="item_team_list_padding">4dp</dimen>
+    <dimen name="item_team_list_left">8dp</dimen>
+    <dimen name="item_team_list_icon_padding">4dp</dimen>
+    <dimen name="fragment_team_padding">5dp</dimen>
+</resources>
+
