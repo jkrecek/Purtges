@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
@@ -46,6 +47,8 @@ public class GCMIntentService extends GCMBaseIntentService {
    */
   protected static final String PROJECT_NUMBER = "1006323902642";
 
+    public static Context tContext;
+
   /**
    * Register the device for GCM.
    * 
@@ -53,6 +56,7 @@ public class GCMIntentService extends GCMBaseIntentService {
    *            the activity's context.
    */
   public static void register(Context mContext) {
+      tContext = mContext;
     GCMRegistrar.checkDevice(mContext);
     GCMRegistrar.checkManifest(mContext);
     GCMRegistrar.register(mContext, PROJECT_NUMBER);
@@ -76,7 +80,9 @@ public class GCMIntentService extends GCMBaseIntentService {
           public void initialize(HttpRequest httpRequest) {
           }
         });
+      Toast.makeText(tContext, endpointBuilder.getRootUrl(), Toast.LENGTH_LONG).show();
     endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
+      Toast.makeText(tContext, endpointBuilder.getRootUrl(), Toast.LENGTH_LONG).show();
   }
 
   /**

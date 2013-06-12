@@ -31,7 +31,7 @@ public class CloudEndpointUtils {
    * http://developers.google.com/eclipse/docs/cloud_endpoints for more
    * information.
    */
-  protected static final boolean LOCAL_ANDROID_RUN = true;
+  protected static final boolean LOCAL_ANDROID_RUN = false;
 
   /*
    * The root URL of where your DevAppServer is running (if you're running the
@@ -48,7 +48,7 @@ public class CloudEndpointUtils {
    * for more information.
    */
   //protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.2.2:8080";
-  protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.0.44:8080";
+  protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://gamingscheduler.appspot.com/";
 
   /**
    * Updates the Google client builder to connect the appropriate server based
@@ -112,7 +112,8 @@ public class CloudEndpointUtils {
     // Exceptions that occur in your Cloud Endpoint implementation classes
     // are wrapped as GoogleJsonResponseExceptions
     if (t instanceof GoogleJsonResponseException) {
-      GoogleJsonError details = ((GoogleJsonResponseException) t).getDetails();
+      GoogleJsonError details = ((GoogleJsonResponseException) t)
+          .getDetails();
       if (details != null) {
         message = details.getMessage();
       }

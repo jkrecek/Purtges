@@ -1,11 +1,11 @@
 {
   "files": [
     {
-      "path": "myapp-deviceinfoendpoint-v1-20130609170000-java-1.15.0-rc-sources.jar", 
+      "path": "gamingscheduler-deviceinfoendpoint-v1-20130611215936-java-1.15.0-rc-sources.jar", 
       "type": "source"
     }, 
     {
-      "path": "myapp-deviceinfoendpoint-v1-20130609170000-java-1.15.0-rc.jar.properties", 
+      "path": "gamingscheduler-deviceinfoendpoint-v1-20130611215936-java-1.15.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -689,7 +689,7 @@
     }
   ], 
   "language_version": "1.15.0-rc", 
-  "revision": 20130609170000, 
+  "revision": 20130611215936, 
   "id": "deviceinfoendpoint:v1", 
   "modulePath": "com/frca/gamingscheduler"
 }

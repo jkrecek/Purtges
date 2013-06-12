@@ -1,11 +1,11 @@
 {
   "files": [
     {
-      "path": "myapp-messageEndpoint-v1-20130609170013-java-1.15.0-rc-sources.jar", 
+      "path": "gamingscheduler-messageEndpoint-v1-20130611215945-java-1.15.0-rc-sources.jar", 
       "type": "source"
     }, 
     {
-      "path": "myapp-messageEndpoint-v1-20130609170013-java-1.15.0-rc.jar.properties", 
+      "path": "gamingscheduler-messageEndpoint-v1-20130611215945-java-1.15.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -689,7 +689,7 @@
     }
   ], 
   "language_version": "1.15.0-rc", 
-  "revision": 20130609170013, 
+  "revision": 20130611215945, 
   "id": "messageEndpoint:v1", 
   "modulePath": "com/frca/gamingscheduler"
 }

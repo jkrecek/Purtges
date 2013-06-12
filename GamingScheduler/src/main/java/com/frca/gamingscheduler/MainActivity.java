@@ -2,6 +2,7 @@ package com.frca.gamingscheduler;
 
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -36,6 +37,11 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+        finish();
+        if (true)
+            return;
         setContentView(R.layout.activity_main);
 
         DrawerAdapter navigationAdapter = getNavigationAdapter();
@@ -61,7 +67,8 @@ public class MainActivity extends FragmentActivity {
                 mTitle = header.getText();
 
                 if (mTitle.equals(getString(R.string.register))) {
-                    GCMIntentService.register(MainActivity.this);
+                    startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                    //GCMIntentService.register(MainActivity.this);
                 }
 
                 bar.setTitle(mTitle);
