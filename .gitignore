@@ -1,0 +1,7 @@
+/.gradle
+/.idea
+/build/classes
+/GamingScheduler/build/
+/GamingScheduler-gcmlib/build/
+/GamingScheduler-AppEngine/google_generated/
+/GamingScheduler-AppEngine/target/
