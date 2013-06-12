@@ -9,40 +9,40 @@
               android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/icon"
-        android:layout_height="@dimen/item_team_list_height"
-        android:layout_width="@dimen/item_team_list_height"
-        android:padding="@dimen/item_team_list_icon_padding"
-        />
+            android:id="@+id/icon"
+            android:layout_height="@dimen/item_team_list_height"
+            android:layout_width="@dimen/item_team_list_height"
+            android:padding="@dimen/item_team_list_icon_padding"
+            />
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/item_team_list_left">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/item_team_list_left">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/text_header"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/text_header"
 
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_weight="1.5"
-            android:textColor="@android:color/white"
-            android:text="@string/test"/>
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_weight="1.5"
+                android:textColor="@android:color/white"
+                android:text="@string/test"/>
 
         <!--android:fontFamily="sans-serif-condensed" -->
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/text_content"
-            android:textSize="12sp"
-            android:layout_weight="1"
-            android:textColor="@android:color/white"
-            android:text="@string/test"/>
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/text_content"
+                android:textSize="12sp"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:text="@string/test"/>
 
     </LinearLayout>
 </LinearLayout>

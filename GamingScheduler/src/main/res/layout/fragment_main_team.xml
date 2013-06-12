@@ -4,7 +4,7 @@
                                    android:id="@+id/pager"
                                    android:layout_width="match_parent"
                                    android:layout_height="match_parent"
-                                   tools:context=".FragmentMainTeam" >
+                                   tools:context=".FragmentMainTeam">
 
     <!--
     This title strip will display the currently visible page title, as well as the page
@@ -19,7 +19,7 @@
             android:background="#222"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
-            android:textColor="#a52" />
+            android:textColor="#a52"/>
 
     <!--<fragment
             android:name="com.frca.gamingscheduler.fragments.FragmentMainTeamData"
@@ -36,32 +36,32 @@
 
 </android.support.v4.view.ViewPager>
 
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      xmlns:tools="http://schemas.android.com/tools"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.2"
-        >
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.2"
+                >
 
-        <fragment
-            android:name="com.frca.gamingscheduler.fragments.FragmentMainTeamData"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            tools:layout="@layout/fragment_main_team_data"/>
+                <fragment
+                    android:name="com.frca.gamingscheduler.fragments.FragmentMainTeamData"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    tools:layout="@layout/fragment_main_team_data"/>
 
-    </ScrollView>
+            </ScrollView>
 
-    <fragment
-        android:name="com.frca.gamingscheduler.fragments.FragmentMainTeamList"
-        android:layout_height="0dp"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_main_team_list"/>
+            <fragment
+                android:name="com.frca.gamingscheduler.fragments.FragmentMainTeamList"
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                tools:layout="@layout/fragment_main_team_list"/>
 
 
-</LinearLayout> -->
+        </LinearLayout> -->

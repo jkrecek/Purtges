@@ -7,6 +7,6 @@
           android:divider="@android:color/transparent"
           android:dividerHeight="0dp"
           android:padding="@dimen/fragment_team_padding"
-          android:entries="@array/test_items" >
+          android:entries="@array/test_items">
 
 </ListView>

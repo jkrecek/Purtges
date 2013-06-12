@@ -7,50 +7,50 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <!-- Styles, taken from Bootstrap Sign-in Form Example.-->
 <style type="text/css">
-body {
-	padding-top: 40px;
-	padding-bottom: 40px;
-	background-color: #f5f5f5;
-}
+    body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+    }
 
-.regDevicesSection {
-	margin-top: 30px;
-}
+    .regDevicesSection {
+    margin-top: 30px;
+    }
 
-.devicenameCol {
-	max-width: 150px;
-}
+    .devicenameCol {
+    max-width: 150px;
+    }
 
-.deviceIdCol {
-	max-width: 500px;
-	word-wrap: break-word;
-}
+    .deviceIdCol {
+    max-width: 500px;
+    word-wrap: break-word;
+    }
 
-.form-sendmessage {
-	max-width: 300px;
-	padding: 29px 29px 29px;
-	margin: 50px auto 20px;
-	background-color: #fff;
-	border: 1px solid #e5e5e5;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-}
+    .form-sendmessage {
+    max-width: 300px;
+    padding: 29px 29px 29px;
+    margin: 50px auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    }
 
-.form-sendmessage input[type="text"] {
-	font-size: 16px;
-	height: auto;
-	margin-bottom: 15px;
-	padding: 7px 9px;
-}
+    .form-sendmessage input[type="text"] {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+    }
 
-.alertStyle {
-	max-width: 300px;
-	margin: 5px auto 20px;
-}
+    .alertStyle {
+    max-width: 300px;
+    margin: 5px auto 20px;
+    }
 </style>
 
 <script type="text/javascript">
@@ -232,79 +232,86 @@ if (window.location.hostname == 'localhost'
         .execute(handleMessageResponse);
       }
   }
+
 </script>
 </head>
 
 <body>
- <div class="container">
-  <h1>Cloud Endpoints Starter Template</h1>
-  <p style="">This sample lists all of your registered Android
-   devices by accessing the Cloud Endpoint exposed by your App Engine
-   App.</p>
-  <p>Use the form below to send a message (via Cloud Endpoints) to
-   your App Engine Server, which will then send a message (via Cloud
-   Messaging) to all of your registered devices.</p>
-  <p>
-   Check out the <a
-    href="http://developers.google.com/eclipse/docs/cloud_endpoints"
-    target="_blank">docs</a> for more information.
-  </p>
+<div class="container">
+    <h1>Cloud Endpoints Starter Template</h1>
 
-  <div class="regDevicesSection">
-   <h3>Registered Devices</h3>
-   <table class="table table-striped" id="regDevicesTable">
-    <thead>
-     <tr>
-      <th>Searching for registered devices...</th>
-     </tr>
-    </thead>
-   </table>
-  </div>
+    <p style="">This sample lists all of your registered Android
+        devices by accessing the Cloud Endpoint exposed by your App Engine
+        App.</p>
 
-  <div class="form-sendmessage">
-   <input class="input-block-level" type="text" id="inputMessage"
-    placeholder="Message">
-   <button id="sendButton" class="btn btn-large btn-primary btn-block">Send</button>
-  </div>
+    <p>Use the form below to send a message (via Cloud Endpoints) to
+        your App Engine Server, which will then send a message (via Cloud
+        Messaging) to all of your registered devices.</p>
 
-  <div id="alertArea" class="alert alertStyle">
-   <button type="button" class="close">&times;</button>
-   <div id="alertContentArea"></div>
-  </div>
+    <p>
+        Check out the <a
+            href="http://developers.google.com/eclipse/docs/cloud_endpoints"
+            target="_blank">docs</a> for more information.
+    </p>
 
-  <div id="successArea" class="alert alertStyle alert-success fade in">
-   Message Sent!</div>
- </div>
- <div class='container navbar navbar-fixed-bottom'>
-  <p class='text-error'>
-   <small>NOTE: This page is not protected by authentication! If
-    you decide to deploy this application, anyone will be able to access
-    it! Information on configuring auth can be found <a
-    href="https://developers.google.com/appengine/articles/auth"
-    target="_blank">here.</a>
-   </small>
-  </p>
- </div>
+    <div class="regDevicesSection">
+        <h3>Registered Devices</h3>
+        <table class="table table-striped" id="regDevicesTable">
+            <thead>
+            <tr>
+                <th>Searching for registered devices...</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 
- <!-- JavaScript -->
- <script src="https://apis.google.com/js/client.js?onload=loadGapi">
+    <div class="form-sendmessage">
+        <input class="input-block-level" type="text" id="inputMessage"
+               placeholder="Message">
+        <button id="sendButton" class="btn btn-large btn-primary btn-block">Send</button>
+    </div>
+
+    <div id="alertArea" class="alert alertStyle">
+        <button type="button" class="close">&times;</button>
+        <div id="alertContentArea"></div>
+    </div>
+
+    <div id="successArea" class="alert alertStyle alert-success fade in">
+        Message Sent!
+    </div>
+</div>
+<div class='container navbar navbar-fixed-bottom'>
+    <p class='text-error'>
+        <small>NOTE: This page is not protected by authentication! If
+            you decide to deploy this application, anyone will be able to access
+            it! Information on configuring auth can be found <a
+                    href="https://developers.google.com/appengine/articles/auth"
+                    target="_blank">here.</a>
+        </small>
+    </p>
+</div>
+
+<!-- JavaScript -->
+<script src="https://apis.google.com/js/client.js?onload=loadGapi">
   {
     "client": {},
       "googleapis.config": {
         root: API_URL
       }
   }
-  </script>
- <script src="js/jquery-1.9.0.min.js"></script>
- <script src="js/bootstrap.min.js"></script>
 
- <script type="text/javascript">
+</script>
+<script src="js/jquery-1.9.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
     $("#sendButton").click(sendMessage);
     $("#alertArea").hide();
     $("#successArea").hide();
     $('.alert .close').on('click', function() {
       $(this).parent().hide();
     })
-  </script>
+
+</script>
 </body>
 </html>

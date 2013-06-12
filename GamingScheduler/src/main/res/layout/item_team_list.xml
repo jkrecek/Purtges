@@ -8,34 +8,34 @@
               android:orientation="vertical">
 
     <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:id="@+id/text_name"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="@string/test" />
+            style="?android:listSeparatorTextViewStyle"
+            android:id="@+id/text_name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/test"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:showDividers="middle"
-        android:divider="?android:dividerVertical"
-        android:dividerPadding="8dp" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            android:divider="?android:dividerVertical"
+            android:dividerPadding="8dp">
 
         <ImageView
-            android:id="@+id/icon"
-            android:layout_width="@dimen/item_team_list_height"
-            android:layout_height="@dimen/item_team_list_height"
-            android:padding="@dimen/item_team_list_icon_padding"/>
+                android:id="@+id/icon"
+                android:layout_width="@dimen/item_team_list_height"
+                android:layout_height="@dimen/item_team_list_height"
+                android:padding="@dimen/item_team_list_icon_padding"/>
 
         <TextView
-            android:id="@+id/text_content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:paddingLeft="@dimen/item_team_list_left"
-            android:text="@string/test"/>
+                android:id="@+id/text_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:paddingLeft="@dimen/item_team_list_left"
+                android:text="@string/test"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="TextContent" >
+    <style name="TextContent">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:textSize">12sp</item>
     </style>

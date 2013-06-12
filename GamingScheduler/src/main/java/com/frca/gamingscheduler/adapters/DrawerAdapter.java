@@ -35,8 +35,8 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         if (convertView != null && convertView.findViewById(R.id.text_header) != null)
             itemView = convertView;
         else {
-            final LayoutInflater inflater = (LayoutInflater)getContext().getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+            final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService
+                    (Context.LAYOUT_INFLATER_SERVICE);
 
             if (!TextUtils.isEmpty(item.header))
                 itemView = inflater.inflate(resourceLayout, null);
@@ -44,9 +44,9 @@ public class DrawerAdapter extends ArrayAdapter<String> {
                 return inflater.inflate(R.layout.item_drawer_divider, null);
         }
 
-        TextView header = (TextView)itemView.findViewById(R.id.text_header);
-        TextView content = (TextView)itemView.findViewById(R.id.text_content);
-        ImageView icon = (ImageView)itemView.findViewById(R.id.icon);
+        TextView header = (TextView) itemView.findViewById(R.id.text_header);
+        TextView content = (TextView) itemView.findViewById(R.id.text_content);
+        ImageView icon = (ImageView) itemView.findViewById(R.id.icon);
 
         header.setText(item.header);
         if (!TextUtils.isEmpty(item.content))

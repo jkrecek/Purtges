@@ -3,17 +3,9 @@ package com.frca.gamingscheduler.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.frca.gamingscheduler.R;
 import com.frca.gamingscheduler.adapters.SectionsPagerAdapter;
@@ -24,6 +16,7 @@ public class FragmentMainTeam extends Fragment {
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
+
     public FragmentMainTeam() {
     }
 

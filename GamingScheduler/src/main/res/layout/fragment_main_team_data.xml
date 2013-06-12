@@ -4,66 +4,66 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:padding="@dimen/fragment_team_padding" >
+              android:padding="@dimen/fragment_team_padding">
 
     <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Game" />
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Game"/>
 
     <TextView
-        style="@style/TextContent"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Dota 2" />
+            style="@style/TextContent"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Dota 2"/>
 
     <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Target" />
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Target"/>
 
     <TextView
-        style="@style/TextContent"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="12. 6. 2013 23:40:03 " />
+            style="@style/TextContent"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="12. 6. 2013 23:40:03 "/>
 
     <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Timer" />
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Timer"/>
 
     <TextView
-        style="@style/TextContent"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="6 days 22 hours 6 minutes and 56 seconds remaining" />
+            style="@style/TextContent"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="6 days 22 hours 6 minutes and 56 seconds remaining"/>
 
     <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Author" />
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Author"/>
 
     <TextView
-        style="@style/TextContent"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Pepek z novýho zámka" />
+            style="@style/TextContent"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Pepek z novýho zámka"/>
 
     <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="Member readiness" />
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Member readiness"/>
 
     <TextView
-        style="@style/TextContent"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="2 / 2 / 1" />
+            style="@style/TextContent"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="2 / 2 / 1"/>
 
 </LinearLayout>

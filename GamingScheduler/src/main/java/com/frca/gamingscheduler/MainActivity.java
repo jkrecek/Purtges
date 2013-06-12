@@ -4,12 +4,10 @@ package com.frca.gamingscheduler;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.frca.gamingscheduler.adapters.DrawerAdapter;
 import com.frca.gamingscheduler.fragments.FragmentMainTeam;
@@ -59,8 +56,8 @@ public class MainActivity extends FragmentActivity {
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                    .replace(R.id.content, fragment)
-                    .commit();
+                        .replace(R.id.content, fragment)
+                        .commit();
 
                 mDrawerList.setItemChecked(position, true);
                 TextView header = (TextView) view.findViewById(R.id.text_header);
@@ -78,7 +75,7 @@ public class MainActivity extends FragmentActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-            R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
             public void onDrawerClosed(View view) {
                 bar.setTitle(mTitle);
@@ -131,7 +128,7 @@ public class MainActivity extends FragmentActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    
+
     private DrawerAdapter getNavigationAdapter() {
         if (mDrawerList == null)
             mDrawerList = (ListView) findViewById(R.id.left_drawer);

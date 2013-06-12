@@ -20,59 +20,59 @@ package com.frca.gamingscheduler.messageEndpoint;
 
 /**
  * MessageEndpoint request initializer for setting properties like key and userIp.
- *
+ * <p/>
  * <p>
  * The simplest usage is to use it to set the key parameter:
  * </p>
- *
+ * <p/>
  * <pre>
-  public static final GoogleClientRequestInitializer KEY_INITIALIZER =
-      new MessageEndpointRequestInitializer(KEY);
+ * public static final GoogleClientRequestInitializer KEY_INITIALIZER =
+ * new MessageEndpointRequestInitializer(KEY);
  * </pre>
- *
+ * <p/>
  * <p>
  * There is also a constructor to set both the key and userIp parameters:
  * </p>
- *
+ * <p/>
  * <pre>
-  public static final GoogleClientRequestInitializer INITIALIZER =
-      new MessageEndpointRequestInitializer(KEY, USER_IP);
+ * public static final GoogleClientRequestInitializer INITIALIZER =
+ * new MessageEndpointRequestInitializer(KEY, USER_IP);
  * </pre>
- *
+ * <p/>
  * <p>
  * If you want to implement custom logic, extend it like this:
  * </p>
- *
+ * <p/>
  * <pre>
-  public static class MyRequestInitializer extends MessageEndpointRequestInitializer {
-
-    {@literal @}Override
-    public void initializeMessageEndpointRequest(MessageEndpointRequest{@literal <}?{@literal >} request)
-        throws IOException {
-      // custom logic
-    }
-  }
- * </pre>
+ * public static class MyRequestInitializer extends MessageEndpointRequestInitializer {
  *
+ * {@literal @}Override
+ * public void initializeMessageEndpointRequest(MessageEndpointRequest{@literal <}?{@literal >} request)
+ * throws IOException {
+ * // custom logic
+ * }
+ * }
+ * </pre>
+ * <p/>
  * <p>
  * Finally, to set the key and userIp parameters and insert custom logic, extend it like this:
  * </p>
- *
+ * <p/>
  * <pre>
-  public static class MyRequestInitializer2 extends MessageEndpointRequestInitializer {
-
-    public MyKeyRequestInitializer() {
-      super(KEY, USER_IP);
-    }
-
-    {@literal @}Override
-    public void initializeMessageEndpointRequest(MessageEndpointRequest{@literal <}?{@literal >} request)
-        throws IOException {
-      // custom logic
-    }
-  }
- * </pre>
+ * public static class MyRequestInitializer2 extends MessageEndpointRequestInitializer {
  *
+ * public MyKeyRequestInitializer() {
+ * super(KEY, USER_IP);
+ * }
+ *
+ * {@literal @}Override
+ * public void initializeMessageEndpointRequest(MessageEndpointRequest{@literal <}?{@literal >} request)
+ * throws IOException {
+ * // custom logic
+ * }
+ * }
+ * </pre>
+ * <p/>
  * <p>
  * Subclasses should be thread-safe.
  * </p>
@@ -81,41 +81,41 @@ package com.frca.gamingscheduler.messageEndpoint;
  */
 public class MessageEndpointRequestInitializer extends com.google.api.client.googleapis.services.json.CommonGoogleJsonClientRequestInitializer {
 
-  public MessageEndpointRequestInitializer() {
-    super();
-  }
+    public MessageEndpointRequestInitializer() {
+        super();
+    }
 
-  /**
-   * @param key API key or {@code null} to leave it unchanged
-   */
-  public MessageEndpointRequestInitializer(String key) {
-    super(key);
-  }
+    /**
+     * @param key API key or {@code null} to leave it unchanged
+     */
+    public MessageEndpointRequestInitializer(String key) {
+        super(key);
+    }
 
-  /**
-   * @param key API key or {@code null} to leave it unchanged
-   * @param userIp user IP or {@code null} to leave it unchanged
-   */
-  public MessageEndpointRequestInitializer(String key, String userIp) {
-    super(key, userIp);
-  }
+    /**
+     * @param key    API key or {@code null} to leave it unchanged
+     * @param userIp user IP or {@code null} to leave it unchanged
+     */
+    public MessageEndpointRequestInitializer(String key, String userIp) {
+        super(key, userIp);
+    }
 
-  @Override
-  public final void initializeJsonRequest(com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest<?> request) throws java.io.IOException {
-    super.initializeJsonRequest(request);
-    initializeMessageEndpointRequest((MessageEndpointRequest<?>) request);
-  }
+    @Override
+    public final void initializeJsonRequest(com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest<?> request) throws java.io.IOException {
+        super.initializeJsonRequest(request);
+        initializeMessageEndpointRequest((MessageEndpointRequest<?>) request);
+    }
 
-  /**
-   * Initializes MessageEndpoint request.
-   *
-   * <p>
-   * Default implementation does nothing. Called from
-   * {@link #initializeJsonRequest(com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest)}.
-   * </p>
-   *
-   * @throws java.io.IOException I/O exception
-   */
-  protected void initializeMessageEndpointRequest(MessageEndpointRequest<?> request) throws java.io.IOException {
-  }
+    /**
+     * Initializes MessageEndpoint request.
+     * <p/>
+     * <p>
+     * Default implementation does nothing. Called from
+     * {@link #initializeJsonRequest(com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest)}.
+     * </p>
+     *
+     * @throws java.io.IOException I/O exception
+     */
+    protected void initializeMessageEndpointRequest(MessageEndpointRequest<?> request) throws java.io.IOException {
+    }
 }

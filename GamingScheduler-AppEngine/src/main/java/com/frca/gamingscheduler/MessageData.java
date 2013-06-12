@@ -1,11 +1,11 @@
 package com.frca.gamingscheduler;
 
+import com.google.appengine.api.datastore.Key;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.google.appengine.api.datastore.Key;
 
 /**
  * An entity for messsages sent from the web console to the registered devices

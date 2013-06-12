@@ -9,10 +9,10 @@ import android.widget.ListView;
 
 import com.frca.gamingscheduler.R;
 import com.frca.gamingscheduler.adapters.TeamListAdapter;
+import com.frca.gamingscheduler.adapters.TeamListAdapter.TeamListItem.State;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.frca.gamingscheduler.adapters.TeamListAdapter.TeamListItem.State;
 
 /**
  * Created by KillerFrca on 5.6.13.
@@ -21,6 +21,7 @@ public class FragmentMainTeamList extends Fragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
 
     private ListView list;
+
     public FragmentMainTeamList() {
     }
 

@@ -23,9 +23,9 @@ android {
 }
 
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-  compile project(':GamingScheduler-gcmlib')
+    compile project(':GamingScheduler-gcmlib')
 }

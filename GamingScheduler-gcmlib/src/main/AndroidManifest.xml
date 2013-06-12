@@ -1,33 +1,41 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.frca.gamingscheduler"
-    android:versionCode="1"
-    android:versionName="1.0">
+          package="com.frca.gamingscheduler"
+          android:versionCode="1"
+          android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="16" />
+    <uses-sdk
+            android:minSdkVersion="7"
+            android:targetSdkVersion="16"/>
 
-   	<permission android:name="com.frca.gamingscheduler.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+    <permission
+            android:name="com.frca.gamingscheduler.permission.C2D_MESSAGE"
+            android:protectionLevel="signature"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
-   	<uses-permission android:name="com.frca.gamingscheduler.permission.C2D_MESSAGE"/>
-   	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-   	<uses-permission android:name="android.permission.WAKE_LOCK"/>
-   	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-   	<uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="com.frca.gamingscheduler.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
     <application>
-    	<service android:name="com.frca.gamingscheduler.GCMIntentService"/>
-      	<receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-          <intent-filter>
-              <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-              <category android:name="com.frca.gamingscheduler"/>
-          </intent-filter>
-          <intent-filter>
-              <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-              <category android:name="com.frca.gamingscheduler"/>
-          </intent-filter>
-      	</receiver>
-    	<activity android:launchMode="singleTop" android:name=".RegisterActivity"/>
+        <service android:name="com.frca.gamingscheduler.GCMIntentService"/>
+        <receiver
+                android:name="com.google.android.gcm.GCMBroadcastReceiver"
+                android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="com.frca.gamingscheduler"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="com.frca.gamingscheduler"/>
+            </intent-filter>
+        </receiver>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".RegisterActivity"/>
     </application>
 
 </manifest>
