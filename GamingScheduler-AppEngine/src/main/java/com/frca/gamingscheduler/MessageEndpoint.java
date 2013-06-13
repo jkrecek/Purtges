@@ -115,7 +115,7 @@ public class MessageEndpoint {
     @ApiMethod(name = "sendMessage")
     public void sendMessage(@Named("message") String message)
             throws IOException {
-        Sender sender = new Sender(Ids.WEB_CLIENT_ID);
+        Sender sender = new Sender(Ids.API_KEY);
         // create a MessageData entity with a timestamp of when it was
         // received, and persist it
         MessageData messageObj = new MessageData();
