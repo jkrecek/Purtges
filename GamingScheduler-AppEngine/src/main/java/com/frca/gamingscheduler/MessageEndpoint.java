@@ -47,16 +47,7 @@ import javax.persistence.Query;
 // NO AUTHENTICATION; OPEN ENDPOINT!
 public class MessageEndpoint {
 
-    /*
-     * TODO: Fill this in with the server key that you've obtained from the API
-     * Console (https://code.google.com/apis/console). This is required for using
-     * Google Cloud Messaging from your AppEngine application even if you are
-     * using a App Engine's local development server.
-     */
-    //private static final String API_KEY = "@ApiKey@";
-    private static final String API_KEY = "AIzaSyAv8pQLXz02btTUY1LWK5v6MGfnGNa-Nt8";
-
-    private static final DeviceInfoEndpoint endpoint = new DeviceInfoEndpoint();
+    private static final UserDeviceEndpoint endpoint = new UserDeviceEndpoint();
 
     /**
      * This function returns a list of messages starting with the newest message
@@ -123,7 +114,7 @@ public class MessageEndpoint {
     @ApiMethod(name = "sendMessage")
     public void sendMessage(@Named("message") String message)
             throws IOException {
-        Sender sender = new Sender(API_KEY);
+        Sender sender = new Sender(Ids.WEB_CLIENT_ID);
         // create a MessageData entity with a timestamp of when it was
         // received, and persist it
         MessageData messageObj = new MessageData();
@@ -136,9 +127,8 @@ public class MessageEndpoint {
             mgr.close();
         }
         // ping a max of 10 registered devices
-        CollectionResponse<DeviceInfo> response = endpoint.listDeviceInfo(null,
-                10);
-        for (DeviceInfo deviceInfo : response.getItems()) {
+        CollectionResponse<UserDevice> response = endpoint.listUserDevice(null, 10);
+        for (UserDevice deviceInfo : response.getItems()) {
             doSendViaGcm(message, sender, deviceInfo);
         }
     }
@@ -148,32 +138,31 @@ public class MessageEndpoint {
      *
      * @param message    the message to be sent in the GCM ping to the device.
      * @param sender     the Sender object to be used for ping,
-     * @param deviceInfo the registration id of the device.
+     * @param userDevice the registration id of the device.
      * @return Result the result of the ping.
      */
     private static Result doSendViaGcm(String message, Sender sender,
-                                       DeviceInfo deviceInfo) throws IOException {
+                                       UserDevice userDevice) throws IOException {
         // Trim message if needed.
         if (message.length() > 1000) {
             message = message.substring(0, 1000) + "[...]";
         }
 
-        // This message object is a Google Cloud Messaging object, it is NOT 
+        // This message object is a Google Cloud Messaging object, it is NOT
         // related to the MessageData class
         Message msg = new Message.Builder().addData("message", message).build();
-        Result result = sender.send(msg, deviceInfo.getDeviceRegistrationID(),
-                5);
+        Result result = sender.send(msg, userDevice.getDeviceRegID(), 5);
         if (result.getMessageId() != null) {
             String canonicalRegId = result.getCanonicalRegistrationId();
             if (canonicalRegId != null) {
-                endpoint.removeDeviceInfo(deviceInfo.getDeviceRegistrationID());
-                deviceInfo.setDeviceRegistrationID(canonicalRegId);
-                endpoint.insertDeviceInfo(deviceInfo);
+                endpoint.removeUserDevice(userDevice.getDeviceRegID());
+                userDevice.setDeviceRegID(canonicalRegId);
+                //endpoint.insertDeviceInfo(deviceInfo);
             }
         } else {
             String error = result.getErrorCodeName();
             if (error.equals(Constants.ERROR_NOT_REGISTERED)) {
-                endpoint.removeDeviceInfo(deviceInfo.getDeviceRegistrationID());
+                endpoint.removeUserDevice(userDevice.getDeviceRegID());
             }
         }
 

@@ -35,10 +35,11 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+        /*startActivity(new Intent(MainActivity.this, RegisterActivity.class));
         finish();
         if (true)
-            return;
+            return;*/
+
         setContentView(R.layout.activity_main);
 
         DrawerAdapter navigationAdapter = getNavigationAdapter();

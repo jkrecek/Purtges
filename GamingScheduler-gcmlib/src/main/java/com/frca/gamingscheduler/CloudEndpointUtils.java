@@ -47,8 +47,8 @@ public class CloudEndpointUtils {
      * http://developer.android.com/tools/devices/emulator.html#networkaddresses
      * for more information.
      */
-    //protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.2.2:8080";
-    protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://gamingscheduler.appspot.com/";
+    protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.2.2:8080";
+    //protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://gamingscheduler.appspot.com/";
 
     /**
      * Updates the Google client builder to connect the appropriate server based
@@ -58,10 +58,9 @@ public class CloudEndpointUtils {
      * @return same Google client builder
      */
     public static <B extends AbstractGoogleClient.Builder> B updateBuilder(
-            B builder) {
+        B builder) {
         if (LOCAL_ANDROID_RUN) {
-            builder.setRootUrl(LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID
-                    + "/_ah/api/");
+            builder.setRootUrl(LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID + "/_ah/api/");
         }
 
         // only enable GZip when connecting to remote server
@@ -69,7 +68,7 @@ public class CloudEndpointUtils {
 
         builder.setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
             public void initialize(AbstractGoogleClientRequest<?> request)
-                    throws IOException {
+                throws IOException {
                 if (!enableGZip) {
                     request.setDisableGZipContent(true);
                 }
@@ -106,7 +105,7 @@ public class CloudEndpointUtils {
         // are wrapped as GoogleJsonResponseExceptions
         if (t instanceof GoogleJsonResponseException) {
             GoogleJsonError details = ((GoogleJsonResponseException) t)
-                    .getDetails();
+                .getDetails();
             if (details != null) {
                 message = details.getMessage();
             }
@@ -122,11 +121,11 @@ public class CloudEndpointUtils {
      */
     public static void showError(final Activity activity, String message) {
         final String errorMessage = message == null ? "Error" : "[Error ] "
-                + message;
+            + message;
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG)
-                        .show();
+                    .show();
             }
         });
     }

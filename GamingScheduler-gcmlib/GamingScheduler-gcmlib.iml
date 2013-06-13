@@ -76,6 +76,7 @@
     <orderEntry type="library" name="jackson-core-asl-1.9.11" level="project" />
     <orderEntry type="library" name="google-http-client-jackson-1.15.0-rc" level="project" />
     <orderEntry type="library" name="gcm" level="project" />
+    <orderEntry type="library" name="google-play-services" level="project" />
   </component>
 </module>
 
