@@ -1,5 +1,6 @@
 package com.frca.gamingscheduler;
 
+import com.frca.gamingscheduler.Const.Ids;
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;

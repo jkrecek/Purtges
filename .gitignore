@@ -5,5 +5,5 @@
 /GamingScheduler-AppEngine/google_generated/
 /GamingScheduler-AppEngine/target/
 /GamingScheduler-AppEngine/datanucleus.log
+/GamingScheduler-AppEngine/src/main/java/com/frca/gamingscheduler/Const/Ids.java
 /GamingScheduler-gcmlib/build/
-/GamingScheduler-gcmlib/src/main/java/com/frca/gamingscheduler\Const/Ids.java
