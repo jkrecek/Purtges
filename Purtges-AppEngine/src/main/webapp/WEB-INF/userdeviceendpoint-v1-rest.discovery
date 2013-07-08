@@ -1,0 +1,182 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"s1omim4x8ymp9_6H8kBMkfEDqpo/6vFS1XI6oKmDwPIyu8yZTtl73BM\"",
+ "discoveryVersion": "v1",
+ "id": "userdeviceendpoint:v1",
+ "name": "userdeviceendpoint",
+ "version": "v1",
+ "description": "This is an API",
+ "ownerDomain": "frca.com",
+ "ownerName": "frca.com",
+ "packagePath": "purtges",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://purtges.appspot.com/_ah/api/userdeviceendpoint/v1/",
+ "basePath": "/_ah/api/userdeviceendpoint/v1/",
+ "rootUrl": "https://purtges.appspot.com/_ah/api/",
+ "servicePath": "userdeviceendpoint/v1/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "schemas": {
+  "CollectionResponse_UserDevice": {
+   "id": "CollectionResponse_UserDevice",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "UserDevice"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "UserDevice": {
+   "id": "UserDevice",
+   "type": "object",
+   "properties": {
+    "deviceRegID": {
+     "type": "string"
+    },
+    "userEmail": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "methods": {
+  "getUserDevice": {
+   "id": "userdeviceendpoint.getUserDevice",
+   "path": "userdevice/{id}",
+   "httpMethod": "GET",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "response": {
+    "$ref": "UserDevice"
+   }
+  },
+  "insertUserDevice": {
+   "id": "userdeviceendpoint.insertUserDevice",
+   "path": "userdevice/{registrationId}",
+   "httpMethod": "POST",
+   "parameters": {
+    "registrationId": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "registrationId"
+   ],
+   "response": {
+    "$ref": "UserDevice"
+   }
+  },
+  "listUserDevice": {
+   "id": "userdeviceendpoint.listUserDevice",
+   "path": "userdevice",
+   "httpMethod": "GET",
+   "parameters": {
+    "cursor": {
+     "type": "string",
+     "location": "query"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32",
+     "location": "query"
+    }
+   },
+   "response": {
+    "$ref": "CollectionResponse_UserDevice"
+   }
+  },
+  "removeUserDevice": {
+   "id": "userdeviceendpoint.removeUserDevice",
+   "path": "userdevice/{id}",
+   "httpMethod": "DELETE",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "response": {
+    "$ref": "UserDevice"
+   }
+  },
+  "updateUserDevice": {
+   "id": "userdeviceendpoint.updateUserDevice",
+   "path": "userdevice",
+   "httpMethod": "PUT",
+   "request": {
+    "$ref": "UserDevice"
+   },
+   "response": {
+    "$ref": "UserDevice"
+   }
+  }
+ }
+}

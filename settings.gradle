@@ -1,1 +1,1 @@
-include ':GamingScheduler', ':GamingScheduler-AppEngine', ':GamingScheduler-gcmlib'
+include ':Purtges', ':Purtges-AppEngine', ':Purtges-endpoints', ':Purtges-Const'

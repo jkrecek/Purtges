@@ -1,9 +1,9 @@
 /.gradle
 /.idea
 /build/classes
-/GamingScheduler/build/
-/GamingScheduler-AppEngine/google_generated/
-/GamingScheduler-AppEngine/target/
-/GamingScheduler-AppEngine/datanucleus.log
-/GamingScheduler-AppEngine/src/main/java/com/frca/gamingscheduler/Const/Ids.java
-/GamingScheduler-gcmlib/build/
+/Purtges/build/
+/Purtges-AppEngine/google_generated/
+/Purtges-AppEngine/target/
+/Purtges-AppEngine/datanucleus.log
+/Purtges-endpoints/build/
+/Purtges-Const/src/main/java/com/frca/purtges/Const/Id.java
