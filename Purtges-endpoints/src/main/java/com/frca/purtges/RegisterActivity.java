@@ -10,12 +10,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.frca.purtges.Const.Ids;
+import com.frca.purtges.devicedataendpoint.model.CollectionResponseDeviceData;
 import com.frca.purtges.devicedataendpoint.model.DeviceData;
 import com.frca.purtges.requests.EndpointHolder;
 import com.frca.purtges.requests.RequestManager;
@@ -59,8 +61,6 @@ public class RegisterActivity extends Activity {
 
         settings = getSharedPreferences("test", 0);
 
-        //getAccount();
-
         requestMgr = new RequestManager(this, settings.getString(PREF_ACCOUNT_NAME, null));
         if (requestMgr.isPrepared())
             authAccount();
@@ -90,7 +90,7 @@ public class RegisterActivity extends Activity {
 
 
     public void authAccount() {
-        String deviceId = null;//settings.getString(DEVICE_REG_ID, null);
+        String deviceId = settings.getString(DEVICE_REG_ID, null);
         if (deviceId != null) {
             appendText("Device is already registred");
             finishActivityTimed(10);
@@ -104,10 +104,8 @@ public class RegisterActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        appendText("DAFUQ?!?!");
         switch (requestCode) {
             case REQUEST_ACCOUNT_PICKER:
-                appendText("end");
                 if (data != null && data.getExtras() != null) {
                     String accountName = data.getExtras().getString(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
@@ -144,13 +142,14 @@ public class RegisterActivity extends Activity {
                     appendText("Device registration found");
                     DeviceData deviceData = (DeviceData) object;
                     if (registrationId.equals(deviceData.getRegistrationId())) {
-                        appendText("User device registration matches: " + deviceData.getRegistrationId());
+                        appendText("User device registration matches: " + deviceData.getRegistrationId() + ", owner: " +deviceData.getOwner() );
                         onDeviceRegSaved(deviceData);
                         // TODO
                         // callX
                         return;
-                    } else
-                        appendText("User device registration mismatch");
+                    } else {
+                        appendText("User device registration mismatch:\n"+ registrationId + "\n" + deviceData.getRegistrationId());
+                    }
                 }
 
                 final DeviceData deviceData = new DeviceData();
@@ -159,12 +158,12 @@ public class RegisterActivity extends Activity {
                 requestMgr.insertDeviceData(deviceData, new BackgroundTask.ForegroundCallback() {
                     @Override
                     public void run(Object object) {
-                        if (object == BackgroundTask.Result.OK) {
+                        if (object != BackgroundTask.Result.ERROR) {
                             appendText("Registration successfully pushed!");
                             onDeviceRegSaved(deviceData);
                             // TODO
                             // callX
-                        } else if (object == BackgroundTask.Result.ERROR) {
+                        } else {
                             appendText("Device registration error, creting new user");
                             final EditText input = new EditText(context);
                             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -210,8 +209,6 @@ public class RegisterActivity extends Activity {
                                 }
                             }).create().show();
 
-                        } else {
-                            appendText("Unexpected result when inserting device data " + object.toString());
                         }
                     }
                 });
@@ -223,6 +220,7 @@ public class RegisterActivity extends Activity {
         if (instance == null)
             return;
 
+        Log.d("LOG_APPEND", text);
         instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {

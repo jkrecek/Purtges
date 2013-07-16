@@ -14,7 +14,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -87,13 +86,15 @@ public class DeviceDataEndpoint {
         try {
             UserDataEndpoint userDataEndpoint = new UserDataEndpoint();
             UserData userData = userDataEndpoint.findUserData(user);
+
             if (userData == null)
                 return null;
 
-            /*if (containsDeviceData(deviceData)) {
+            if (containsDeviceData(deviceData)) {
                 throw new EntityExistsException("Object already exists");
-            }*/
-            userData.setEmail(user.getEmail());
+            }
+
+            deviceData.setOwner(userData.getEmail());
             mgr.persist(deviceData);
         } finally {
             mgr.close();

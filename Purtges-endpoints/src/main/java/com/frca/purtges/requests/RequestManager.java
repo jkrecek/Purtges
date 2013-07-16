@@ -50,13 +50,27 @@ public class RequestManager {
         return credential;
     }
 
+    public EndpointHolder getEndpoints() {
+        return endpoints;
+    }
+
+    private boolean isValid(com.google.api.client.json.GenericJson result) {
+        if (result == null)
+            return false;
+
+        if (result.get("error_message") != null && result.get("kind") != null)
+            return false;
+
+        return true;
+    }
+
     public void insertDeviceData(final DeviceData deviceData, BackgroundTask.ForegroundCallback callback) {
         new BackgroundTask(new BackgroundTask.BackgroundCallback() {
             @Override
             public Object run() {
                 try {
                     DeviceData result = endpoints.deviceData().insertDeviceData(deviceData).execute();
-                    if (result == null)
+                    if (!isValid(result))
                         return BackgroundTask.Result.ERROR;
                     else
                         return result;
@@ -73,13 +87,31 @@ public class RequestManager {
             @Override
             public Object run() {
                 try {
-                    DeviceData deviceData = endpoints.deviceData().getDeviceData(id).execute();
-                    if (deviceData == null)
+                    DeviceData result = endpoints.deviceData().getDeviceData(id).execute();
+                    if (!isValid(result))
                         return BackgroundTask.Result.ERROR;
                     else
-                        return deviceData;
+                        return result;
                 } catch (IOException e) {
                     Log.e("REQUEST_MANAGER", "Error at getDeviceData: " + e.getClass().getName() + ": " + e.getMessage());
+                    return BackgroundTask.Result.ERROR;
+                }
+            }
+        }, callback).execute();
+    }
+
+    public void removeDeviceData(final String id, BackgroundTask.ForegroundCallback callback) {
+        new BackgroundTask(new BackgroundTask.BackgroundCallback() {
+            @Override
+            public Object run() {
+                try {
+                    DeviceData result = endpoints.deviceData().removeDeviceData(id).execute();
+                    if (!isValid(result))
+                        return BackgroundTask.Result.ERROR;
+                    else
+                        return result;
+                } catch (IOException e) {
+                    Log.e("REQUEST_MANAGER", "Error at removeDeviceData: " + e.getClass().getName() + ": " + e.getMessage());
                     return BackgroundTask.Result.ERROR;
                 }
             }
@@ -92,7 +124,7 @@ public class RequestManager {
             public Object run() {
                 try {
                     UserData result = endpoints.userData().insertUserData(displayName).execute();
-                    if (result == null)
+                    if (!isValid(result))
                         return BackgroundTask.Result.ERROR;
                     else
                         return result;

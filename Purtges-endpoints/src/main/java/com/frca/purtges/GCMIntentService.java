@@ -43,9 +43,9 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
 
     public static boolean register(Context mContext) {
-        GCMRegistrar.checkDevice(mContext);
-        GCMRegistrar.checkManifest(mContext);
         if (!GCMRegistrar.isRegistered(mContext)) {
+            GCMRegistrar.checkDevice(mContext);
+            GCMRegistrar.checkManifest(mContext);
             GCMRegistrar.register(mContext, Ids.PROJECT_NUMBER);
             return false;
         } else
