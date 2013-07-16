@@ -7,8 +7,10 @@
 /Purtges-AppEngine/datanucleus.log
 /Purtges-endpoints/build/
 /Purtges-endpoints/src/endpoint-src/
+/Purtges-Const/build
 /Purtges-Const/src/main/java/com/frca/purtges/Const/Id.java
 /Purtges-AppEngine/src/main/webapp/WEB-INF/*.api
 /Purtges-AppEngine/src/main/webapp/WEB-INF/*.discovery
 /Purtges-AppEngine/src/main/webapp/WEB-INF/classes
 /Purtges-AppEngine/src/main/webapp/WEB-INF/lib
+Thumbs.db
