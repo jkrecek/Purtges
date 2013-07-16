@@ -1,1 +1,1 @@
-include ':Purtges', ':Purtges-AppEngine', ':Purtges-endpoints', ':Purtges-Const'
+include ':Purtges-Android', ':Purtges-AppEngine', ':Purtges-endpoints', ':Purtges-Const'
