@@ -35,8 +35,7 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         if (convertView != null && convertView.findViewById(R.id.text_header) != null)
             itemView = convertView;
         else {
-            final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService
-                    (Context.LAYOUT_INFLATER_SERVICE);
+            final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (!TextUtils.isEmpty(item.header))
                 itemView = inflater.inflate(resourceLayout, null);

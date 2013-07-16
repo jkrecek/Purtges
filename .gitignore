@@ -6,4 +6,5 @@
 /Purtges-AppEngine/target/
 /Purtges-AppEngine/datanucleus.log
 /Purtges-endpoints/build/
+/Purtges-endpoints/src/endpoint-src/
 /Purtges-Const/src/main/java/com/frca/purtges/Const/Id.java

@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.4'
+        classpath 'com.android.tools.build:gradle:0.5+'
     }
 }
 apply plugin: 'android'
@@ -23,7 +23,7 @@ android {
 }
 
 task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
-    gradleVersion = '1.4'
+    gradleVersion = '1.6'
 }
 
 repositories {

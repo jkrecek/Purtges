@@ -15,12 +15,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.frca.purtges.Const.Ids;
 import com.frca.purtges.adapters.DrawerAdapter;
 import com.frca.purtges.fragments.FragmentMainTeam;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.MatchesPattern;
 
 public class MainActivity extends FragmentActivity {
 
@@ -67,7 +71,12 @@ public class MainActivity extends FragmentActivity {
                 if (mTitle.equals(getString(R.string.register))) {
                     startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                     //GCMIntentService.register(MainActivity.this);
+                } else if (mTitle.equals(getString(R.string.checker))) {
+                    Intent special = new Intent(MainActivity.this, RegisterActivity.class);
+                    special.putExtra(RegisterActivity.SPECIAL, RegisterActivity.SPECIAL_ID);
+                    startActivity(special);
                 }
+
 
                 bar.setTitle(mTitle);
                 mDrawerLayout.closeDrawer(mDrawerList);
@@ -152,6 +161,7 @@ public class MainActivity extends FragmentActivity {
             items.add(new DrawerAdapter.DrawerItem(getString(R.string.team_add), android.R.drawable.ic_menu_add));
             items.add(new DrawerAdapter.DrawerItem(getString(R.string.teams_manage), android.R.drawable.ic_menu_manage));
             items.add(new DrawerAdapter.DrawerItem(getString(R.string.register), android.R.drawable.ic_menu_save));
+            items.add(new DrawerAdapter.DrawerItem(getString(R.string.checker), android.R.drawable.ic_menu_manage));
 
 
             DrawerAdapter.DrawerItem[] arrItems = items.toArray(new DrawerAdapter.DrawerItem[items.size()]);

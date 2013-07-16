@@ -3,27 +3,19 @@ package com.frca.purtges;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.frca.purtges.Const.Ids;
-import com.frca.purtges.userdeviceendpoint.Userdeviceendpoint;
-import com.frca.purtges.userdeviceendpoint.model.UserDevice;
+import com.frca.purtges.devicedataendpoint.model.DeviceData;
 
-import android.content.Context;
-import android.content.Intent;
+
+import com.frca.purtges.requests.EndpointHolder;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAuthIOException;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 /**
  * This class is started up as a service of the Android application. It listens
@@ -46,187 +38,68 @@ import java.net.URLEncoder;
  */
 public class GCMIntentService extends GCMBaseIntentService {
 
-    private final Userdeviceendpoint endpoint;
+    public GCMIntentService() {
+        super(Ids.PROJECT_NUMBER);
+    }
 
-    private static GoogleAccountCredential credential = null;
-
-    public static void register(Context mContext) {
+    public static boolean register(Context mContext) {
         GCMRegistrar.checkDevice(mContext);
         GCMRegistrar.checkManifest(mContext);
-        GCMRegistrar.register(mContext, Ids.PROJECT_NUMBER);
+        if (!GCMRegistrar.isRegistered(mContext)) {
+            GCMRegistrar.register(mContext, Ids.PROJECT_NUMBER);
+            return false;
+        } else
+            return true;
     }
 
     public static void unregister(Context mContext) {
         GCMRegistrar.unregister(mContext);
     }
 
-    public GCMIntentService() {
-        super(Ids.PROJECT_NUMBER);
-        if (credential == null) {
-            Log.e(GCMIntentService.class.getName(), "No credentials set");
-            stopSelf();
-        } else if (credential.getSelectedAccountName() == null) {
-            Log.e(GCMIntentService.class.getName(), "No accountname set");
-            stopSelf();
-        }
 
-        Userdeviceendpoint.Builder endpointBuilder = new Userdeviceendpoint.Builder(
-            AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-            credential);
-        endpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
-    }
-
-    public static GoogleAccountCredential getCredential() {
-        return credential;
-    }
-
-    public static void setCredential(GoogleAccountCredential credential) {
-        GCMIntentService.credential = credential;
+    public static String getDeviceId(Context mContext) {
+        return GCMRegistrar.getRegistrationId(mContext);
     }
 
     @Override
     public void onError(Context context, String errorId) {
-
-        sendNotificationIntent(
-                context,
-                "Registration with Google Cloud Messaging...FAILED!\n\n"
-                        + "A Google Cloud Messaging registration error occured (errorid: "
-                        + errorId
-                        + "). "
-                        + "Do you have your project number ("
-                        + ("".equals(Ids.PROJECT_NUMBER) ? "<unset>"
-                        : Ids.PROJECT_NUMBER)
-                        + ")  set correctly, and do you have Google Cloud Messaging enabled for the "
-                        + "project?", true, true);
+        RegisterActivity.appendText("App error");
+        sendResultToUI(context, true);
     }
 
-    /**
-     * Called when a cloud message has been received.
-     */
     @Override
     public void onMessage(Context context, Intent intent) {
-        sendNotificationIntent(
-                context,
-                "Message received via Google Cloud Messaging:\n\n"
-                        + intent.getStringExtra("message"), true, false);
+
     }
 
-    /**
-     * Called back when a registration token has been received from the Google
-     * Cloud Messaging service.
-     *
-     * @param context the Context
-     */
     @Override
     public void onRegistered(Context context, String registration) {
-        UserDevice userDevice = null;
-
-        try {
-            RegisterActivity.appendText("Probing for existing UserDevice");
-            userDevice = endpoint.getUserDevice(registration).execute();
-
-            if (userDevice != null && registration.equals(userDevice.getDeviceRegID())) {
-                RegisterActivity.appendText("UserDevice: " + userDevice.toString());
-            } else {
-                userDevice = null;
-                RegisterActivity.appendText("Existing UserDevice not found");
-            }
-
-        } catch (IOException e) {
-            // Ignore
-        }
-
-        try {
-            if (userDevice == null) {
-                RegisterActivity.appendText("Starting registration push to DataStore");
-
-                userDevice = endpoint.insertUserDevice(registration).execute();
-                RegisterActivity.appendText("Registration pushed");
-            }
-        } catch (final IOException e) {
-            RegisterActivity.appendText("Exception " + e.getClass().getName() + ": " + e.getMessage() + "|\n   " + "Cause: " + e.getCause());
-
-            Log.e(GCMIntentService.class.getName(),
-                    "Exception received when attempting to register with server at "
-                            + endpoint.getRootUrl(), e);
-
-            return;
-        }
-
-        RegisterActivity.appendText("SUCCESS");
-        RegisterActivity.instance.onRegistered(userDevice);
+        RegisterActivity.appendText("App registered");
+        sendResultToUI(context, false);
     }
 
-    /**
-     * Called back when the Google Cloud Messaging service has unregistered the
-     * device.
-     *
-     * @param context the Context
-     */
     @Override
     protected void onUnregistered(Context context, String registrationId) {
 
-        if (registrationId != null && registrationId.length() > 0) {
+        /*if (registrationId != null && registrationId.length() > 0) {
 
             try {
-                endpoint.removeUserDevice(registrationId).execute();
+                EndpointHolder.deviceData().removeDeviceData(registrationId).execute();
             } catch (IOException e) {
                 Log.e(GCMIntentService.class.getName(),
                         "Exception received when attempting to unregister with server at "
-                                + endpoint.getRootUrl(), e);
-                sendNotificationIntent(
-                        context,
-                        "1) De-registration with Google Cloud Messaging....SUCCEEDED!\n\n"
-                                + "2) De-registration with Endpoints Server...FAILED!\n\n"
-                                + "We were unable to de-register your device from your Cloud "
-                                + "Endpoints server running at "
-                                + endpoint.getRootUrl() + "."
-                                + "See your Android log for more information.",
-                        true, true);
+                                + EndpointHolder.deviceData().getRootUrl(), e);
+
                 return;
             }
-        }
-
-        sendNotificationIntent(
-                context,
-                "1) De-registration with Google Cloud Messaging....SUCCEEDED!\n\n"
-                        + "2) De-registration with Endpoints Server...SUCCEEDED!\n\n"
-                        + "Device de-registration with Cloud Endpoints server running at  "
-                        + endpoint.getRootUrl() + " succeeded!", false, true);
+        }*/
     }
 
-    /**
-     * Generate a notification intent and dispatch it to the RegisterActivity.
-     * This is how we get information from this service (non-UI) back to the
-     * activity.
-     * <p/>
-     * For this to work, the 'android:launchMode="singleTop"' attribute needs to
-     * be set for the RegisterActivity in AndroidManifest.xml.
-     *
-     * @param context               the application context
-     * @param message               the message to send
-     * @param isError               true if the message is an error-related message; false
-     *                              otherwise
-     * @param isRegistrationMessage true if this message is related to registration/unregistration
-     */
-    private void sendNotificationIntent(Context context, String message,
-                                        boolean isError, boolean isRegistrationMessage) {
-        /*Intent notificationIntent = new Intent(context, RegisterActivity.class);
-        notificationIntent.putExtra("gcmIntentServiceMessage", true);
-        notificationIntent.putExtra("registrationMessage",
-                isRegistrationMessage);
-        notificationIntent.putExtra("error", isError);
-        notificationIntent.putExtra("message", message);
+    private void sendResultToUI(Context context, boolean isError) {
+        Intent notificationIntent = new Intent(context, RegisterActivity.class);
+        notificationIntent.putExtra(RegisterActivity.IDENTIFIER, RegisterActivity.GCM_SERVICE);
+        notificationIntent.putExtra(RegisterActivity.ERROR, isError);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(notificationIntent);*/
+        startActivity(notificationIntent);
     }
-
-    /*private String getWebSampleUrl(String endpointUrl) {
-        // Not the most elegant solution; we'll improve this in the future
-        if (CloudEndpointUtils.LOCAL_ANDROID_RUN) {
-            return CloudEndpointUtils.LOCAL_APP_ENGINE_SERVER_URL
-                    + "index.html";
-        }
-        return endpointUrl.replace("/_ah/api/", "/index.html");
-    }*/
 }

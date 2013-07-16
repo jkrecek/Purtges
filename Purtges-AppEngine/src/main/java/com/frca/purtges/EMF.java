@@ -5,7 +5,7 @@ import javax.persistence.Persistence;
 
 public final class EMF {
     private static final EntityManagerFactory INSTANCE =
-            Persistence.createEntityManagerFactory("transactions-optional");
+        Persistence.createEntityManagerFactory("transactions-optional");
 
     private EMF() {
     }

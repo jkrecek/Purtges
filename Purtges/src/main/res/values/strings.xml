@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">GamingScheduler
+    <string name="app_name">Purtges
     </string>
     <string name="action_settings">Settings
     </string>
@@ -15,6 +15,7 @@
     <string name="team_add">Add Team</string>
     <string name="teams_manage">Manage Teams</string>
     <string name="register">Register</string>
+    <string name="checker">Checker</string>
 
     <string name="drawer_open">Opening ...</string>
     <string name="drawer_close">Closing ...</string>

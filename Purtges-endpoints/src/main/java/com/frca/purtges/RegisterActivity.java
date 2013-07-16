@@ -3,40 +3,45 @@ package com.frca.purtges;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Button;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.frca.purtges.Const.Ids;
-import com.frca.purtges.userdeviceendpoint.model.UserDevice;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.frca.purtges.devicedataendpoint.model.DeviceData;
+import com.frca.purtges.requests.EndpointHolder;
+import com.frca.purtges.requests.RequestManager;
+import com.google.android.gms.auth.GoogleAuthException;
+
+import java.io.IOException;
 
 public class RegisterActivity extends Activity {
 
-    static final int REQUEST_ACCOUNT_PICKER = 2;
+    public static final int REQUEST_ACCOUNT_PICKER = 2;
     static final String PREF_ACCOUNT_NAME = "accountName";
     static final String DEVICE_REG_ID = "deviceId";
-
-    enum State {
-        REGISTERED, REGISTERING, UNREGISTERED, UNREGISTERING
-    }
-
-    private State curState = State.UNREGISTERED;
-    //private MessageEndpoint messageEndpoint = null;
-    //private Teaminfoendpoint teaminfoEndpoint = null;
-    private Button mSendButton = null;
+    static final String SPECIAL = "special";
+    static final int SPECIAL_ID = 5;
+    static final int GCM_SERVICE = 6;
+    static final String ERROR = "error";
+    static final String IDENTIFIER = "identifier";
 
     private SharedPreferences settings = null;
-    private GoogleAccountCredential credential = null;
 
     private TextView mStatus = null;
     private TextView mLog = null;
 
     public static RegisterActivity instance = null;
+
+    private RequestManager requestMgr = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,47 +50,21 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         mStatus = (TextView) findViewById(R.id.text);
+        ((View)mStatus.getParent()).setVisibility(View.GONE);
+
         mLog = (TextView) findViewById(R.id.text_content);
         instance = this;
 
         appendText("Starting '" + getClass().getName() + "'");
 
-        appendText("Creating initial data");
-
         settings = getSharedPreferences("test", 0);
-        credential = GoogleAccountCredential.usingAudience(this, "server:client_id:" + Ids.ANDROID_AUDIENCE);
 
-        checkAccount();
+        //getAccount();
 
-        /*mSendButton = (Button) findViewById(R.id.sendButton);
-        mSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (curState == State.REGISTERED) {
-                    EditText text = (EditText) findViewById(R.id.textEdit);
-                    new InsertMessageTask(RegisterActivity.this, messageEndpoint, text.getText().toString()).execute();
-                } else
-                    Toast.makeText(RegisterActivity.this, "Register first", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
+        requestMgr = new RequestManager(this, settings.getString(PREF_ACCOUNT_NAME, null));
+        if (requestMgr.isPrepared())
+            authAccount();
     }
-
-    /*private void setEndpoints() {
-        MessageEndpoint.Builder endpointBuilder = new MessageEndpoint.Builder(
-            AndroidHttp.newCompatibleTransport(),
-            new JacksonFactory(),
-            GCMIntentService.getCredential());
-
-        messageEndpoint = CloudEndpointUtils.updateBuilder(endpointBuilder).build();
-
-        Teaminfoendpoint.Builder teamInfoBuilder = new Teaminfoendpoint.Builder(
-            AndroidHttp.newCompatibleTransport(),
-            new JacksonFactory(),
-            GCMIntentService.getCredential());
-
-        teaminfoEndpoint = CloudEndpointUtils.updateBuilder(teamInfoBuilder).build();
-    }*/
 
     @Override
     protected void onResume() {
@@ -101,51 +80,38 @@ public class RegisterActivity extends Activity {
         instance = null;
     }
 
-    private void checkAccount() {
-        appendText("Checking account");
-        String accName = settings.getString(PREF_ACCOUNT_NAME, null);
-        if (accName != null) {
-            credential.setSelectedAccountName(accName);
-            appendText("Account name already set");
-            checkDeviceId();
-        } else {
-            appendText("Waiting for selecting your account");
-            startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
-        }
-
+    public void selectedAccount(String accountName) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(PREF_ACCOUNT_NAME, accountName);
+        editor.commit();
+        requestMgr.setAccountName(accountName);
+        authAccount();
     }
 
-    private void checkDeviceId() {
-        GCMIntentService.setCredential(credential);
 
-        appendText("Account selected, checking registration");
-        String deviceId = settings.getString(DEVICE_REG_ID, null);
+    public void authAccount() {
+        String deviceId = null;//settings.getString(DEVICE_REG_ID, null);
         if (deviceId != null) {
             appendText("Device is already registred");
             finishActivityTimed(10);
-            //finish();
         } else {
-            updateState(State.REGISTERING);
-            try {
-                appendText("Registering into GCM");
-                GCMIntentService.register(this);
-            } catch (Exception e) {
-                appendText("ERROR:: " + RegisterActivity.class.getName() + ": Unable to register");
-                updateState(State.UNREGISTERED);
-            }
+            appendText("Registering into GCM");
+            if (GCMIntentService.register(this))
+                onRegistered();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        appendText("DAFUQ?!?!");
         switch (requestCode) {
             case REQUEST_ACCOUNT_PICKER:
+                appendText("end");
                 if (data != null && data.getExtras() != null) {
                     String accountName = data.getExtras().getString(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
-                        setAccountName(accountName);
-                        checkDeviceId();
+                        selectedAccount(accountName);
                     } else {
                         appendText("ERROR:: No accountName selected!");
                     }
@@ -154,11 +120,103 @@ public class RegisterActivity extends Activity {
         }
     }
 
-    private void setAccountName(String accountName) {
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(PREF_ACCOUNT_NAME, accountName);
-        editor.commit();
-        credential.setSelectedAccountName(accountName);
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (intent.getIntExtra(IDENTIFIER, 0)  == GCM_SERVICE) {
+            if (intent.getBooleanExtra(ERROR, true)) {
+                appendText("Registration to GCM failed");
+            } else {
+                appendText("Registration to GCM was successfull");
+                onRegistered();
+            }
+        }
+    }
+
+    public void onRegistered() {
+        final String registrationId = GCMIntentService.getDeviceId(this);
+        final Context context = this;
+        requestMgr.getDeviceData(registrationId, new BackgroundTask.ForegroundCallback() {
+            @Override
+            public void run(Object object) {
+                if (object != null && object instanceof DeviceData) {
+                    appendText("Device registration found");
+                    DeviceData deviceData = (DeviceData) object;
+                    if (registrationId.equals(deviceData.getRegistrationId())) {
+                        appendText("User device registration matches: " + deviceData.getRegistrationId());
+                        onDeviceRegSaved(deviceData);
+                        // TODO
+                        // callX
+                        return;
+                    } else
+                        appendText("User device registration mismatch");
+                }
+
+                final DeviceData deviceData = new DeviceData();
+                deviceData.setRegistrationId(registrationId);
+
+                requestMgr.insertDeviceData(deviceData, new BackgroundTask.ForegroundCallback() {
+                    @Override
+                    public void run(Object object) {
+                        if (object == BackgroundTask.Result.OK) {
+                            appendText("Registration successfully pushed!");
+                            onDeviceRegSaved(deviceData);
+                            // TODO
+                            // callX
+                        } else if (object == BackgroundTask.Result.ERROR) {
+                            appendText("Device registration error, creting new user");
+                            final EditText input = new EditText(context);
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                            input.setLayoutParams(lp);
+
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Set display name")
+                                .setMessage("Please, set your display name")
+                                .setView(input)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        RegisterActivity.appendText("Display Name selected, registring to endpoint!");
+                                        final String displayName = input.getText().toString();
+                                        requestMgr.insertUserData(displayName, new BackgroundTask.ForegroundCallback() {
+                                            @Override
+                                            public void run(Object object) {
+                                                if (object == BackgroundTask.Result.ERROR) {
+                                                    appendText("Something went terribly wrong :(");
+                                                } else {
+                                                    appendText("User registered successfully, registering device again");
+                                                    requestMgr.insertDeviceData(deviceData, new BackgroundTask.ForegroundCallback() {
+                                                        @Override
+                                                        public void run(Object object) {
+                                                            if (object == BackgroundTask.Result.ERROR) {
+                                                                appendText("Something went terribly wrong :(");
+                                                            } else {
+                                                                appendText("Device registered successfully");
+                                                                onDeviceRegSaved(deviceData);
+                                                                // TODO
+                                                                // callX
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            }).create().show();
+
+                        } else {
+                            appendText("Unexpected result when inserting device data " + object.toString());
+                        }
+                    }
+                });
+            }
+        });
     }
 
     public static void appendText(final String text) {
@@ -174,11 +232,45 @@ public class RegisterActivity extends Activity {
         });
     }
 
-    public void onRegistered(UserDevice userDevice) {
+    public void onDeviceRegSaved(DeviceData deviceData) {
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString(DEVICE_REG_ID, userDevice.getDeviceRegID());
+        editor.putString(DEVICE_REG_ID, deviceData.getRegistrationId());
         editor.commit();
         finishActivityTimed(10);
+    }
+
+    private void runChecker(final String accountName) {
+        appendText("Building checker");
+
+        requestMgr = new RequestManager(this, accountName);
+
+        final Checker checker = new Checker(new String[] {Ids.ANDROID_CLIENT_ID, Ids.WEB_CLIENT_ID}, Ids.ANDROID_AUDIENCE);
+
+        new BackgroundTask(new BackgroundTask.BackgroundCallback() {
+            @Override
+            public BackgroundTask.Result run() {
+                try {
+                    appendText("Acquiring token for account " + accountName);
+                    String token = requestMgr.getCredential().getToken();
+                    appendText("Token acquired, checking it");
+                    checker.check(token);
+                    return BackgroundTask.Result.OK;
+                } catch (IOException e) {
+                    checker.setProblem("Network IO problem: " + e.getLocalizedMessage());
+                } catch (GoogleAuthException e) {
+                    checker.setProblem("Google Auth problem: " + e.getLocalizedMessage());
+                }
+                return BackgroundTask.Result.ERROR;
+            }
+        }, new BackgroundTask.ForegroundCallback() {
+            @Override
+            public void run(Object result) {
+                if (result == BackgroundTask.Result.OK)
+                    appendText("Everything OK! Payload: " + checker.getPayload().toString());
+                else if (result == BackgroundTask.Result.ERROR)
+                    appendText("Checking failed! ERROR: " + checker.problem());
+            }
+        }).execute();
     }
 
     final Handler mHandler = new Handler();
@@ -211,172 +303,14 @@ public class RegisterActivity extends Activity {
         }, 1000);
     }
 
-    /*@Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (intent.getBooleanExtra("gcmIntentServiceMessage", false)) {
-
-            showDialog(intent.getStringExtra("message"));
-
-            if (intent.getBooleanExtra("registrationMessage", false)) {
-
-                if (intent.getBooleanExtra("error", false)) {
-
-                    if (curState == State.REGISTERING) {
-                        updateState(State.UNREGISTERED);
-                    } else {
-                        updateState(State.REGISTERED);
-                    }
-                } else {
-
-                    if (curState == State.REGISTERING) {
-                        updateState(State.REGISTERED);
-                    } else {
-                        updateState(State.UNREGISTERED);
-                    }
-                }
-            } else {
-                new QueryMessagesTask(this, messageEndpoint).execute();
-            }
-        }
-    }*/
-
-    private void updateState(State newState) {
-        curState = newState;
-    }
-
     private void showDialog(String message) {
         new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        }).show();
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
-
-
-
-    /*private class QueryMessagesTask
-            extends AsyncTask<Void, Void, CollectionResponseMessageData> {
-        Exception exceptionThrown = null;
-        MessageEndpoint messageEndpoint;
-
-        public QueryMessagesTask(Activity activity, MessageEndpoint messageEndpoint) {
-            this.messageEndpoint = messageEndpoint;
-        }
-
-        @Override
-        protected CollectionResponseMessageData doInBackground(Void... params) {
-            try {
-                CollectionResponseMessageData messages =
-                        messageEndpoint.listMessages().setLimit(5).execute();
-                return messages;
-            } catch (IOException e) {
-                exceptionThrown = e;
-                return null;
-                //Handle exception in PostExecute
-            }
-        }
-
-        protected void onPostExecute(CollectionResponseMessageData messages) {
-            // Check if exception was thrown
-            if (exceptionThrown != null) {
-                Log.e(RegisterActivity.class.getName(),
-                        "Exception when listing Messages", exceptionThrown);
-                showDialog("Failed to retrieve the last 5 messages from " +
-                        "the endpoint at " + messageEndpoint.getBaseUrl() +
-                        ", check log for details");
-            } else {
-                TextView messageView = (TextView) findViewById(R.id.msgView);
-                messageView.setText("Last 5 Messages read from " +
-                        messageEndpoint.getBaseUrl() + ":\n");
-                for (MessageData message : messages.getItems()) {
-                    messageView.append(message.getMessage() + "\n");
-                }
-            }
-        }
-    }
-
-    private class InsertMessageTask
-        extends AsyncTask<Void, Void, Void> {
-        Exception exceptionThrown = null;
-        MessageEndpoint messageEndpoint;
-        String message;
-
-        public InsertMessageTask(Activity activity, MessageEndpoint messageEndpoint, String message) {
-            this.messageEndpoint = messageEndpoint;
-            this.message = message;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                messageEndpoint.sendMessage(message).execute();
-                //Toast.makeText(RegisterActivity.this, "Message2 '" + info.getTeamName() + "' saved", Toast.LENGTH_LONG).show();
-                return null;
-            } catch (IOException e) {
-                exceptionThrown = e;
-                return null;
-                //Handle exception in PostExecute
-            }
-        }
-
-        protected void onPostExecute(Void messages) {
-            RegisterActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (exceptionThrown == null)
-                        Toast.makeText(RegisterActivity.this, "Message2 '" + message + "' saved", Toast.LENGTH_LONG).show();
-                    else
-                        Toast.makeText(RegisterActivity.this, "Message2: '" + exceptionThrown.getMessage(), Toast.LENGTH_LONG).show();
-
-                }
-            });
-
-            return;
-        }
-    }
-
-    private class InsertTeaminfoTask
-        extends AsyncTask<Void, Void, Void> {
-        Exception exceptionThrown = null;
-        Teaminfoendpoint teaminfoEndpoint;
-        TeamInfo info;
-
-        public InsertTeaminfoTask(Activity activity, Teaminfoendpoint teaminfoEndpoint, TeamInfo info) {
-            this.teaminfoEndpoint = teaminfoEndpoint;
-            this.info = info;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                teaminfoEndpoint.insertTeamInfo(info).execute();
-                //Toast.makeText(RegisterActivity.this, "Message2 '" + info.getTeamName() + "' saved", Toast.LENGTH_LONG).show();
-                return null;
-            } catch (IOException e) {
-                exceptionThrown = e;
-                return null;
-                //Handle exception in PostExecute
-            }
-        }
-
-        protected void onPostExecute(Void messages) {
-            RegisterActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (exceptionThrown == null)
-                        Toast.makeText(RegisterActivity.this, "Message2 '" + info.getTeamName() + "' saved", Toast.LENGTH_LONG).show();
-                    else
-                        Toast.makeText(RegisterActivity.this, "Message2: '" + exceptionThrown.getMessage(), Toast.LENGTH_LONG).show();
-
-                }
-            });
-
-            return;
-        }
-    }*/
 }

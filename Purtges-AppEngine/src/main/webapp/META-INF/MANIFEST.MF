@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Build-Jdk: 1.7.0_40
-Built-By: frca
+Build-Jdk: 1.7.0_21
+Built-By: KillerFrca
 Created-By: Apache Maven 3.0.5
 
