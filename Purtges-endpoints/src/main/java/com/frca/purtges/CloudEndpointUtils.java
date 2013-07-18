@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.frca.purtges.Const.Ids;
 import com.google.api.client.googleapis.json.GoogleJsonError;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
@@ -36,6 +37,8 @@ public class CloudEndpointUtils {
         if (LOCAL_ANDROID_RUN) {
             builder.setRootUrl(LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID + "/_ah/api/");
         }
+
+        builder.setApplicationName(Ids.PACKAGE_NAME);
 
         // only enable GZip when connecting to remote server
         final boolean enableGZip = builder.getRootUrl().startsWith("https:");
