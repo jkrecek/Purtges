@@ -1,8 +1,6 @@
 package com.frca.purtges.helpers;
 
 import com.frca.purtges.Const.Ids;
-import com.frca.purtges.DeviceData;
-import com.frca.purtges.DeviceDataEndpoint;
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;
@@ -16,7 +14,7 @@ import java.util.Collection;
  */
 public class GCM {
 
-    public static Result doSend(DeviceData deviceData, String message, Sender sender, DeviceDataEndpoint endpoint) throws IOException {
+    /*public static Result doSend(DeviceData deviceData, String message, Sender sender, DeviceDataEndpoint endpoint) throws IOException {
 
         if (endpoint == null)
             endpoint = new DeviceDataEndpoint();
@@ -58,7 +56,7 @@ public class GCM {
 
     public static void doSend(Collection<DeviceData> deviceDatas, String message) throws IOException {
         doSend(deviceDatas, message, null);
-    }
+    }*/
 
 
 }

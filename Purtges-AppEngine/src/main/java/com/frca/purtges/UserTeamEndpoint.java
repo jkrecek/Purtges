@@ -6,8 +6,8 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
-import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
@@ -88,7 +88,7 @@ public class UserTeamEndpoint {
         @Named("name") String name,
         @Named("passwordHash") String passwordHash,
         User user)
-        throws IOException {
+        throws OAuthRequestException, IOException {
 
         EntityManager mgr = getEntityManager();
         UserDataEndpoint userDataEndpoint = new UserDataEndpoint();

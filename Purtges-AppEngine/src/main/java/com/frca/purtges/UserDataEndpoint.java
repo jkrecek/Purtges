@@ -1,24 +1,27 @@
 package com.frca.purtges;
 
 import com.frca.purtges.Const.Ids;
-import com.frca.purtges.helpers.Values;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 @Api(
     name = "userdataendpoint",
@@ -71,12 +74,15 @@ public class UserDataEndpoint {
     }
 
     @ApiMethod(name = "getUserData")
-    public UserData getUserData(@Named("id") String id) {
+    public UserData getUserData(@Named("id") Long id, User user) throws OAuthRequestException {
         EntityManager mgr = getEntityManager();
         UserData userData = null;
         try {
-            if (id != null)
+            if (id == 0)
+                userData = findUserData(user);
+            else
                 userData = mgr.find(UserData.class, id);
+
         } finally {
             mgr.close();
         }
@@ -84,18 +90,47 @@ public class UserDataEndpoint {
     }
 
     @ApiMethod(name = "insertUserData")
-    public UserData insertUserData(@Named("displayName") String displayName, User user) {
+    public UserData insertUserData(UserData userData, User user) throws OAuthRequestException {
+        EntityManager mgr = getEntityManager();
+        try {
+            if (!userData.getEmail().equals(user.getEmail()))
+                throw new OAuthRequestException("Wrong user");
+
+            if (userData.getId() != null && containsUserData(userData)) {
+                throw new EntityExistsException("Object already exists");
+            }
+            userData.setEmail(user.getEmail());
+            mgr.persist(userData);
+        } finally {
+            mgr.close();
+        }
+        return userData;
+    }
+
+    @ApiMethod(name = "updateUserData")
+    public UserData updateUserData(UserData userData, User user) throws OAuthRequestException {
+        EntityManager mgr = getEntityManager();
+        try {
+            if (!userData.getEmail().equals(user.getEmail()))
+                throw new OAuthRequestException("Wrong user");
+
+            if (!containsUserData(userData)) {
+                throw new EntityNotFoundException("Object does not exist");
+            }
+            mgr.persist(userData);
+        } finally {
+            mgr.close();
+        }
+        return userData;
+    }
+
+    @ApiMethod(name = "removeUserData")
+    public UserData removeUserData(@Named("id") Long id) {
         EntityManager mgr = getEntityManager();
         UserData userData = null;
         try {
-            // TODO: Check existing displayName?
-            /*if (containsUserData(userData)) {
-                throw new EntityExistsException("Object already exists");
-            }*/
-            userData = new UserData();
-            userData.setEmail(user.getEmail());
-            userData.setDisplayName(displayName);
-            mgr.persist(userData);
+            userData = mgr.find(UserData.class, id);
+            mgr.remove(userData);
         } finally {
             mgr.close();
         }
@@ -106,7 +141,7 @@ public class UserDataEndpoint {
         EntityManager mgr = getEntityManager();
         boolean contains = true;
         try {
-            UserData item = mgr.find(UserData.class, userData.getEmail());
+            UserData item = mgr.find(UserData.class, userData.getId());
             if (item == null) {
                 contains = false;
             }
@@ -116,14 +151,20 @@ public class UserDataEndpoint {
         return contains;
     }
 
-    public UserData findUserData(User user) {
+    public UserData findUserData(User user) throws OAuthRequestException {
         if (user == null)
-            return null;
+            throw new OAuthRequestException("No user authed!");
 
         EntityManager mgr = getEntityManager();
         UserData userData = null;
         try {
-            userData = mgr.find(UserData.class, user.getEmail());
+            final CriteriaBuilder cb = mgr.getCriteriaBuilder();
+            final CriteriaQuery<UserData> query = cb.createQuery(UserData.class);
+            final Root<UserData> root = query.from(UserData.class);
+            query.where(cb.equal(root.<String>get("email"), user.getEmail()));
+            userData = mgr.createQuery(query).getSingleResult();
+        } catch(NoResultException e) {
+            // ignore
         } finally {
             mgr.close();
         }

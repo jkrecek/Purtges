@@ -1,20 +1,15 @@
 package com.frca.purtges.requests;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.frca.purtges.BackgroundTask;
 import com.frca.purtges.Const.Ids;
-import com.frca.purtges.GCMIntentService;
 import com.frca.purtges.RegisterActivity;
-import com.frca.purtges.devicedataendpoint.model.DeviceData;
-import com.frca.purtges.requests.EndpointHolder;
+import com.frca.purtges.requests.callbacks.QueryTask;
+import com.frca.purtges.requests.callbacks.ResultCallback;
 import com.frca.purtges.userdataendpoint.model.UserData;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-
-import java.io.IOException;
 
 /**
  * Created by KillerFrca on 15.7.13.
@@ -24,6 +19,10 @@ public class RequestManager {
     private GoogleAccountCredential credential;
 
     private EndpointHolder endpoints;
+
+    private NetworkRunnable networkRunnable = new NetworkRunnable();
+
+    private Thread workingThread = new Thread(networkRunnable);
 
     public RequestManager(Activity activity, String selectedAccount) {
         credential = GoogleAccountCredential.usingAudience(activity, Ids.AUDIENCE_SCOPE);
@@ -42,6 +41,7 @@ public class RequestManager {
 
         return true;
     }
+
     public void setAccountName(String selectedAccount) {
         credential.setSelectedAccountName(selectedAccount);
     }
@@ -54,87 +54,52 @@ public class RequestManager {
         return endpoints;
     }
 
-    private boolean isValid(com.google.api.client.json.GenericJson result) {
-        if (result == null)
-            return false;
+    private void addTask(NetworkTask task) {
+        task.setTaskName(getCurrentMethodName());
 
-        if (result.get("error_message") != null && result.get("kind") != null)
-            return false;
+        Log.d("TASK_MGMNT", "Adding task `" + task.getTaskName() + "` to queue.");
+        networkRunnable.addTask(task);
 
-        return true;
+        if (!workingThread.isAlive())
+            workingThread.start();
     }
 
-    public void insertDeviceData(final DeviceData deviceData, BackgroundTask.ForegroundCallback callback) {
-        new BackgroundTask(new BackgroundTask.BackgroundCallback() {
+
+    public void getOwnUserData(ResultCallback callback) {
+        getUserData(Long.valueOf(0), callback);
+    }
+
+    public void getUserData(final Long id, ResultCallback callback) {
+        addTask(new NetworkTask(new QueryTask() {
             @Override
-            public Object run() {
-                try {
-                    DeviceData result = endpoints.deviceData().insertDeviceData(deviceData).execute();
-                    if (!isValid(result))
-                        return BackgroundTask.Result.ERROR;
-                    else
-                        return result;
-                } catch (IOException e) {
-                    Log.e("REQUEST_MANAGER", "Error at insertDeviceData: " + e.getClass().getName() + ": " + e.getMessage());
-                    return BackgroundTask.Result.ERROR;
-                }
+            public Object query() throws Exception {
+                return endpoints.userData().getUserData(id).execute();
             }
-        }, callback).execute();
+        }, callback));
     }
 
-    public void getDeviceData(final String id, BackgroundTask.ForegroundCallback callback) {
-        new BackgroundTask(new BackgroundTask.BackgroundCallback() {
+    public void insertUserData(final UserData userData, ResultCallback callback) {
+        addTask(new NetworkTask(new QueryTask() {
+
             @Override
-            public Object run() {
-                try {
-                    DeviceData result = endpoints.deviceData().getDeviceData(id).execute();
-                    if (!isValid(result))
-                        return BackgroundTask.Result.ERROR;
-                    else
-                        return result;
-                } catch (IOException e) {
-                    Log.e("REQUEST_MANAGER", "Error at getDeviceData: " + e.getClass().getName() + ": " + e.getMessage());
-                    return BackgroundTask.Result.ERROR;
-                }
+            public Object query() throws Exception {
+                return endpoints.userData().insertUserData(userData).execute();
             }
-        }, callback).execute();
+        }, callback));
     }
 
-    public void removeDeviceData(final String id, BackgroundTask.ForegroundCallback callback) {
-        new BackgroundTask(new BackgroundTask.BackgroundCallback() {
+    public void updateUserData(final UserData userData, ResultCallback callback) {
+        addTask(new NetworkTask(new QueryTask() {
+
             @Override
-            public Object run() {
-                try {
-                    DeviceData result = endpoints.deviceData().removeDeviceData(id).execute();
-                    if (!isValid(result))
-                        return BackgroundTask.Result.ERROR;
-                    else
-                        return result;
-                } catch (IOException e) {
-                    Log.e("REQUEST_MANAGER", "Error at removeDeviceData: " + e.getClass().getName() + ": " + e.getMessage());
-                    return BackgroundTask.Result.ERROR;
-                }
+            public Object query() throws Exception {
+                return endpoints.userData().updateUserData(userData).execute();
             }
-        }, callback).execute();
+        }, callback));
     }
 
-    public void insertUserData(final String displayName, BackgroundTask.ForegroundCallback callback) {
-        new BackgroundTask(new BackgroundTask.BackgroundCallback() {
-            @Override
-            public Object run() {
-                try {
-                    UserData result = endpoints.userData().insertUserData(displayName).execute();
-                    if (!isValid(result))
-                        return BackgroundTask.Result.ERROR;
-                    else
-                        return result;
-                } catch (IOException e) {
-                    Log.e("REQUEST_MANAGER", "Error at insertUserData: " + e.getClass().getName() + ": " + e.getMessage());
-                    return BackgroundTask.Result.ERROR;
-                }
-            }
-        }, callback).execute();
+    public String getCurrentMethodName() {
+        final StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+        return ste[4].getMethodName();
     }
-
-
 }

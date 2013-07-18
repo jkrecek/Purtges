@@ -9,21 +9,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.frca.purtges.Const.Ids;
-import com.frca.purtges.devicedataendpoint.model.CollectionResponseDeviceData;
-import com.frca.purtges.devicedataendpoint.model.DeviceData;
-import com.frca.purtges.requests.EndpointHolder;
+import com.frca.purtges.helpers.Result;
 import com.frca.purtges.requests.RequestManager;
-import com.google.android.gms.auth.GoogleAuthException;
+import com.frca.purtges.requests.callbacks.ResultCallback;
+import com.frca.purtges.userdataendpoint.model.UserData;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class RegisterActivity extends Activity {
 
@@ -80,6 +80,12 @@ public class RegisterActivity extends Activity {
         instance = null;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        GCMIntentService.onDestroy(this);
+    }
     public void selectedAccount(String accountName) {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(PREF_ACCOUNT_NAME, accountName);
@@ -122,7 +128,7 @@ public class RegisterActivity extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        if (intent.getIntExtra(IDENTIFIER, 0)  == GCM_SERVICE) {
+        if (intent.getIntExtra(IDENTIFIER, 0) == GCM_SERVICE) {
             if (intent.getBooleanExtra(ERROR, true)) {
                 appendText("Registration to GCM failed");
             } else {
@@ -133,87 +139,97 @@ public class RegisterActivity extends Activity {
     }
 
     public void onRegistered() {
-        final String registrationId = GCMIntentService.getDeviceId(this);
-        final Context context = this;
-        requestMgr.getDeviceData(registrationId, new BackgroundTask.ForegroundCallback() {
+
+        appendText("Registering device in endpoints");
+        requestMgr.getOwnUserData(new ResultCallback() {
             @Override
-            public void run(Object object) {
-                if (object != null && object instanceof DeviceData) {
-                    appendText("Device registration found");
-                    DeviceData deviceData = (DeviceData) object;
-                    if (registrationId.equals(deviceData.getRegistrationId())) {
-                        appendText("User device registration matches: " + deviceData.getRegistrationId() + ", owner: " +deviceData.getOwner() );
-                        onDeviceRegSaved(deviceData);
-                        // TODO
-                        // callX
-                        return;
-                    } else {
-                        appendText("User device registration mismatch:\n"+ registrationId + "\n" + deviceData.getRegistrationId());
-                    }
-                }
+            public void handleDone(Object result) {
+                if (result == Result.ERROR) {
+                    appendText("User not yet created, creting new one");
+                    appendText("User must select displayName");
 
-                final DeviceData deviceData = new DeviceData();
-                deviceData.setRegistrationId(registrationId);
-
-                requestMgr.insertDeviceData(deviceData, new BackgroundTask.ForegroundCallback() {
-                    @Override
-                    public void run(Object object) {
-                        if (object != BackgroundTask.Result.ERROR) {
-                            appendText("Registration successfully pushed!");
-                            onDeviceRegSaved(deviceData);
-                            // TODO
-                            // callX
-                        } else {
-                            appendText("Device registration error, creting new user");
-                            final EditText input = new EditText(context);
-                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                            input.setLayoutParams(lp);
-
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Set display name")
-                                .setMessage("Please, set your display name")
-                                .setView(input)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        RegisterActivity.appendText("Display Name selected, registring to endpoint!");
-                                        final String displayName = input.getText().toString();
-                                        requestMgr.insertUserData(displayName, new BackgroundTask.ForegroundCallback() {
-                                            @Override
-                                            public void run(Object object) {
-                                                if (object == BackgroundTask.Result.ERROR) {
-                                                    appendText("Something went terribly wrong :(");
-                                                } else {
-                                                    appendText("User registered successfully, registering device again");
-                                                    requestMgr.insertDeviceData(deviceData, new BackgroundTask.ForegroundCallback() {
-                                                        @Override
-                                                        public void run(Object object) {
-                                                            if (object == BackgroundTask.Result.ERROR) {
-                                                                appendText("Something went terribly wrong :(");
-                                                            } else {
-                                                                appendText("Device registered successfully");
-                                                                onDeviceRegSaved(deviceData);
-                                                                // TODO
-                                                                // callX
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        });
-                                    }
-                                }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            }).create().show();
-
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            handleCreatingOfUser();
                         }
-                    }
-                });
+                    });
+
+                } else {
+                    appendText("User exists, registering now");
+                    registerDevice((UserData) result);
+                }
             }
         });
+    }
+
+    protected void registerDevice(UserData userData) {
+        List<String> deviceIds = userData.getDeviceIds();
+        String registration = GCMIntentService.getDeviceId(this);
+
+        if (deviceIds == null)
+            deviceIds = new ArrayList<String>();
+
+        if (deviceIds.isEmpty() || !deviceIds.contains(registration)) {
+            deviceIds.add(registration);
+            userData.setDeviceIds(deviceIds);
+
+            requestMgr.updateUserData(userData, new ResultCallback() {
+                @Override
+                public void handleDone(Object result) {
+                    if (result == Result.ERROR) {
+                        appendText("ERROR");
+                    } else {
+                        appendText("Everything went fine");
+                        finishActivityTimed(10);
+                    }
+                }
+            });
+        } else {
+            appendText("Device is already registred");
+            finishActivityTimed(10);
+        }
+    }
+
+    private void registerDeviceToData(UserData userData) {
+
+    }
+
+    protected void handleCreatingOfUser() {
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Set display name")
+            .setMessage("Please, set your display name")
+            .setView(input)
+            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    RegisterActivity.appendText("Display Name selected, registring to endpoint!");
+
+                    UserData userData = new UserData();
+                    userData.setDisplayName(input.getText().toString());
+                    userData.setDeviceIds(Collections.<String>emptyList());
+
+                    requestMgr.insertUserData(userData, new ResultCallback() {
+                        @Override
+                        public void handleDone(Object result) {
+                            if (result == Result.ERROR)
+                                appendText("Something went bad when creating user");
+                            else
+                                registerDevice((UserData) result);
+                        }
+                    });
+
+                }
+            }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).create().show();
     }
 
     public static void appendText(final String text) {
@@ -230,46 +246,46 @@ public class RegisterActivity extends Activity {
         });
     }
 
-    public void onDeviceRegSaved(DeviceData deviceData) {
-        SharedPreferences.Editor editor = settings.edit();
+    public void onDeviceRegSaved(/*DeviceData deviceData*/) {
+        /*SharedPreferences.Editor editor = settings.edit();
         editor.putString(DEVICE_REG_ID, deviceData.getRegistrationId());
         editor.commit();
-        finishActivityTimed(10);
+        finishActivityTimed(10);*/
     }
 
-    private void runChecker(final String accountName) {
+    /*private void runChecker(final String accountName) {
         appendText("Building checker");
 
         requestMgr = new RequestManager(this, accountName);
 
         final Checker checker = new Checker(new String[] {Ids.ANDROID_CLIENT_ID, Ids.WEB_CLIENT_ID}, Ids.ANDROID_AUDIENCE);
 
-        new BackgroundTask(new BackgroundTask.BackgroundCallback() {
+        new NetworkTask(new NetworkTask.BackgroundCallback() {
             @Override
-            public BackgroundTask.Result run() {
+            public Result run() {
                 try {
                     appendText("Acquiring token for account " + accountName);
                     String token = requestMgr.getCredential().getToken();
                     appendText("Token acquired, checking it");
                     checker.check(token);
-                    return BackgroundTask.Result.OK;
+                    return Result.OK;
                 } catch (IOException e) {
                     checker.setProblem("Network IO problem: " + e.getLocalizedMessage());
                 } catch (GoogleAuthException e) {
                     checker.setProblem("Google Auth problem: " + e.getLocalizedMessage());
                 }
-                return BackgroundTask.Result.ERROR;
+                return Result.ERROR;
             }
-        }, new BackgroundTask.ForegroundCallback() {
+        }, new NetworkTask.ForegroundCallback() {
             @Override
             public void run(Object result) {
-                if (result == BackgroundTask.Result.OK)
+                if (result == Result.OK)
                     appendText("Everything OK! Payload: " + checker.getPayload().toString());
-                else if (result == BackgroundTask.Result.ERROR)
+                else if (result == Result.ERROR)
                     appendText("Checking failed! ERROR: " + checker.problem());
             }
         }).execute();
-    }
+    }*/
 
     final Handler mHandler = new Handler();
     int steps = 0;

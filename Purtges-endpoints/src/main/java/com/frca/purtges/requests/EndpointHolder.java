@@ -1,7 +1,6 @@
 package com.frca.purtges.requests;
 
 import com.frca.purtges.CloudEndpointUtils;
-import com.frca.purtges.devicedataendpoint.Devicedataendpoint;
 import com.frca.purtges.teamendpoint.Teamendpoint;
 import com.frca.purtges.teammessagesendpoint.Teammessagesendpoint;
 import com.frca.purtges.teamtimerendpoint.Teamtimerendpoint;
@@ -19,7 +18,6 @@ public class EndpointHolder {
 
     private GoogleAccountCredential credential = null;
 
-    public Devicedataendpoint devicedataendpoint = null;
     public Teamendpoint teamendpoint = null;
     public Teammessagesendpoint teammessagesendpoint = null;
     public Teamtimerendpoint teamtimerendpoint = null;
@@ -29,18 +27,6 @@ public class EndpointHolder {
 
     public EndpointHolder(GoogleAccountCredential credential) {
         this.credential = credential;
-    }
-
-    public Devicedataendpoint deviceData() {
-        if (devicedataendpoint == null) {
-            devicedataendpoint = CloudEndpointUtils.updateBuilder(
-                    new Devicedataendpoint.Builder(
-                            AndroidHttp.newCompatibleTransport(), new JacksonFactory(), credential
-                    )
-            ).build();
-        }
-
-        return devicedataendpoint;
     }
 
     public Teamendpoint team() {

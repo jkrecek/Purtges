@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.frca.purtges.Const.Ids;
-import com.frca.purtges.devicedataendpoint.model.DeviceData;
 
 
 import com.frca.purtges.requests.EndpointHolder;
@@ -54,6 +53,10 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     public static void unregister(Context mContext) {
         GCMRegistrar.unregister(mContext);
+    }
+
+    public static void onDestroy(Context mContext) {
+        GCMRegistrar.onDestroy(mContext);
     }
 
 
