@@ -79,6 +79,8 @@
     <orderEntry type="module" module-name="Purtges-endpoints" exported="" />
     <orderEntry type="module" module-name="Purtges-Const" exported="" />
     <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
+    <orderEntry type="library" exported="" name="ComAndroidSupportAppcompatV71800.aar" level="project" />
+    <orderEntry type="library" exported="" name="ComGoogleAndroidGmsPlayServices3136.aar" level="project" />
   </component>
 </module>
 

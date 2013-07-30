@@ -11,9 +11,6 @@ import com.frca.purtges.requests.callbacks.ResultCallback;
 import com.frca.purtges.userdataendpoint.model.UserData;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
-/**
- * Created by KillerFrca on 15.7.13.
- */
 public class RequestManager {
 
     private GoogleAccountCredential credential;
