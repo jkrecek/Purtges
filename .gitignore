@@ -1,6 +1,7 @@
 /.gradle
 /.idea
 /build/classes
+/Purtges/
 /Purtges-Android/build/
 /Purtges-AppEngine/google_generated/
 /Purtges-AppEngine/target/

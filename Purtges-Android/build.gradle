@@ -9,7 +9,7 @@ buildscript {
 apply plugin: 'android'
 
 dependencies {
-    compile files('libs/android-support-v4.jar')
+    //compile files('libs/android-support-v4.jar')
 }
 
 android {
@@ -32,4 +32,7 @@ repositories {
 
 dependencies {
   compile project(':Purtges-endpoints')
+  compile 'com.android.support:support-v4:18.0.+'
+  compile 'com.android.support:appcompat-v7:18.0.+'
+  compile 'com.google.android.gms:play-services:3.1.36+'
 }

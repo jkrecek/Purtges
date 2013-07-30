@@ -14,13 +14,20 @@ repositories {
 }
 
 dependencies {
-    compile files('libs/gcm.jar')
-    compile files('libs/google-play-services.jar')
+    compile files('libs/gcm.jar')/* n ,
+            'libs/google-play-services.jar')/*,
+            'libs/android-support-v4.jar',
+            'libs/android-support-v7-appcompat.jar')*/
     compile project(':Purtges-Const')
     compile ('com.google.api-client:google-api-client-android:1.15.0-rc') {
         exclude group: 'com.google.android.google-play-services'
     }
+
+    compile 'com.android.support:support-v4:18.0.+'
+    compile 'com.android.support:appcompat-v7:18.0.+'
     compile 'com.google.http-client:google-http-client-jackson:1.15.0-rc'
+    compile 'com.google.android.gms:play-services:3.1.36+'
+
 }
 
 android {

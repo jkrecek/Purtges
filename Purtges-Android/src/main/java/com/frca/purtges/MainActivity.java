@@ -1,12 +1,10 @@
 package com.frca.purtges;
 
-
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -15,18 +13,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.frca.purtges.Const.Ids;
 import com.frca.purtges.adapters.DrawerAdapter;
+import com.frca.purtges.fragments.FragmentLog;
 import com.frca.purtges.fragments.FragmentMainTeam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.MatchesPattern;
-
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppActivity {
 
     private ListView mDrawerList;
 
@@ -39,7 +34,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+        /*startActivity(new Intent(MainActivity.this, EndpointService.class));
         finish();
         if (true)
             return;*/
@@ -69,11 +64,11 @@ public class MainActivity extends FragmentActivity {
                 mTitle = header.getText();
 
                 if (mTitle.equals(getString(R.string.register))) {
-                    startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                    startActivity(new Intent(MainActivity.this, EndpointService.class));
                     //GCMIntentService.register(MainActivity.this);
                 } else if (mTitle.equals(getString(R.string.checker))) {
-                    Intent special = new Intent(MainActivity.this, RegisterActivity.class);
-                    special.putExtra(RegisterActivity.SPECIAL, RegisterActivity.SPECIAL_ID);
+                    Intent special = new Intent(MainActivity.this, EndpointService.class);
+                    special.putExtra(EndpointService.SPECIAL, EndpointService.SPECIAL_ID);
                     startActivity(special);
                 }
 
@@ -89,12 +84,12 @@ public class MainActivity extends FragmentActivity {
 
             public void onDrawerClosed(View view) {
                 bar.setTitle(mTitle);
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
                 bar.setTitle(R.string.navigation);
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
             }
         };
 
@@ -169,5 +164,13 @@ public class MainActivity extends FragmentActivity {
         }
 
         return adapter;
+    }
+
+
+    @Override
+    public void appendText(String text) {
+        FragmentMainTeam fragment = (FragmentMainTeam)getSupportFragmentManager().findFragmentById(R.id.content);
+        FragmentLog fragmentLog = (FragmentLog)fragment.getSectionsPagerAdapter().getItem(0);
+        fragmentLog.appendText(text);
     }
 }

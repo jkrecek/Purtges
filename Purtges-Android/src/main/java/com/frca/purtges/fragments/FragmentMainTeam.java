@@ -36,4 +36,8 @@ public class FragmentMainTeam extends Fragment {
 
         return rootView;
     }
+
+    public SectionsPagerAdapter getSectionsPagerAdapter() {
+        return mSectionsPagerAdapter;
+    }
 }

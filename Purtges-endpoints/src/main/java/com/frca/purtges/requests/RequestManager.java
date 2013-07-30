@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.frca.purtges.Const.Ids;
-import com.frca.purtges.RegisterActivity;
+import com.frca.purtges.EndpointService;
 import com.frca.purtges.requests.callbacks.QueryTask;
 import com.frca.purtges.requests.callbacks.ResultCallback;
 import com.frca.purtges.userdataendpoint.model.UserData;
@@ -32,7 +32,7 @@ public class RequestManager {
             credential.setSelectedAccountName(selectedAccount);
         }
         else
-            activity.startActivityForResult(credential.newChooseAccountIntent(), RegisterActivity.REQUEST_ACCOUNT_PICKER);
+            activity.startActivityForResult(credential.newChooseAccountIntent(), EndpointService.REQUEST_ACCOUNT_PICKER);
     }
 
     public boolean isPrepared() {

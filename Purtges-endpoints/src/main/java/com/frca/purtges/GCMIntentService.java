@@ -2,19 +2,12 @@ package com.frca.purtges;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.frca.purtges.Const.Ids;
 
 
-import com.frca.purtges.requests.EndpointHolder;
-
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
-
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-
-import java.io.IOException;
 
 /**
  * This class is started up as a service of the Android application. It listens
@@ -66,7 +59,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     public void onError(Context context, String errorId) {
-        RegisterActivity.appendText("App error");
+        //EndpointService.appendText("App error");
         sendResultToUI(context, true);
     }
 
@@ -77,7 +70,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     public void onRegistered(Context context, String registration) {
-        RegisterActivity.appendText("App registered");
+        //EndpointService.appendText("App registered");
         sendResultToUI(context, false);
     }
 
@@ -99,9 +92,9 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
 
     private void sendResultToUI(Context context, boolean isError) {
-        Intent notificationIntent = new Intent(context, RegisterActivity.class);
-        notificationIntent.putExtra(RegisterActivity.IDENTIFIER, RegisterActivity.GCM_SERVICE);
-        notificationIntent.putExtra(RegisterActivity.ERROR, isError);
+        Intent notificationIntent = new Intent(context, EndpointService.class);
+        notificationIntent.putExtra(EndpointService.IDENTIFIER, EndpointService.GCM_SERVICE);
+        notificationIntent.putExtra(EndpointService.ERROR, isError);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(notificationIntent);
     }

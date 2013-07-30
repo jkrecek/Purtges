@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.frca.purtges.R;
+import com.frca.purtges.fragments.FragmentLog;
 import com.frca.purtges.fragments.FragmentMainTeamData;
 import com.frca.purtges.fragments.FragmentMainTeamList;
 
@@ -15,6 +16,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private Resources mResources;
 
+    private Fragment[] fragments = {null, null, null};
+
     public SectionsPagerAdapter(FragmentManager fm, Resources resources) {
         super(fm);
         mResources = resources;
@@ -22,19 +25,31 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if (fragments[position] != null)
+            return fragments[position];
+
+        Fragment fragment;
         switch (position) {
             case 0:
-                return new FragmentMainTeamData();
+                fragment = new FragmentLog();
+                break;
             case 1:
-                return new FragmentMainTeamList();
+                fragment = new FragmentMainTeamData();
+                break;
+            case 2:
+                fragment = new FragmentMainTeamList();
+                break;
             default:
-                return new Fragment();
+                fragment = new Fragment();
         }
+
+        fragments[position] = fragment;
+        return fragment;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -43,8 +58,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return mResources.getString(R.string.section_title_data).toUpperCase(l);
+                return "Log";
             case 1:
+                return mResources.getString(R.string.section_title_data).toUpperCase(l);
+            case 2:
                 return mResources.getString(R.string.section_title_list).toUpperCase(l);
         }
         return null;
