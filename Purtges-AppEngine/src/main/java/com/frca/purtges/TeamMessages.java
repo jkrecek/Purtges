@@ -17,7 +17,7 @@ public class TeamMessages {
 
     @OneToOne
     @MapsId
-    private Team team;
+    private TeamData team;
 
     @OneToOne
     @MapsId
@@ -35,11 +35,11 @@ public class TeamMessages {
         this.id = id;
     }
 
-    public Team getTeam() {
+    public TeamData getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(TeamData team) {
         this.team = team;
     }
 

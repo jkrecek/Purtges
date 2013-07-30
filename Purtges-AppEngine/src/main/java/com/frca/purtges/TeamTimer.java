@@ -24,7 +24,7 @@ public class TeamTimer {
 
     @OneToOne
     @MapsId
-    private Team team;
+    private TeamData team;
 
     private Date time;
 
@@ -46,11 +46,11 @@ public class TeamTimer {
         this.id = id;
     }
 
-    public Team getTeam() {
+    public TeamData getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(TeamData team) {
         this.team = team;
     }
 

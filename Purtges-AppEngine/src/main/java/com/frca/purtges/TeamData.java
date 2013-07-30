@@ -1,20 +1,24 @@
 package com.frca.purtges;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
 @Entity
-@TableGenerator(name="team", initialValue=0)
-public class Team {
+public class TeamData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "team")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 
@@ -22,15 +26,19 @@ public class Team {
 
     private int gameType;
 
-    @OneToOne
-    @MapsId
-    private TeamTimer currentTimer;
+    @ManyToMany
+    private List<TeamTimer> timers = new ArrayList<TeamTimer>();
 
-    public int getId() {
+    @ManyToMany
+    private List<UserData> users = new ArrayList<UserData>();
+
+    private UserData admin;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,11 +66,27 @@ public class Team {
         this.gameType = gameType;
     }
 
-    public TeamTimer getCurrentTimer() {
-        return currentTimer;
+    public List<TeamTimer> getTimers() {
+        return timers;
     }
 
-    public void setCurrentTimer(TeamTimer currentTimer) {
-        this.currentTimer = currentTimer;
+    public void setTimers(List<TeamTimer> timers) {
+        this.timers = timers;
+    }
+
+    public List<UserData> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserData> users) {
+        this.users = users;
+    }
+
+    public UserData getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(UserData admin) {
+        this.admin = admin;
     }
 }
