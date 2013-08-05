@@ -1,15 +1,16 @@
-package com.frca.purtges;
+package com.frca.purtges.activities;
 
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
+import com.frca.purtges.services.EndpointService;
 import com.frca.purtges.tunnel.EndpointTunnel;
 
-public abstract class AppActivity extends FragmentActivity {
+//public abstract class AppActivity extends FragmentActivity {
+public abstract class AppActivity extends ActionBarActivity {
 
     protected EndpointTunnel tunnel;
 
@@ -55,20 +56,6 @@ public abstract class AppActivity extends FragmentActivity {
                     }
                 }
                 break;
-        }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (intent.getIntExtra(EndpointService.IDENTIFIER, 0) == EndpointService.GCM_SERVICE) {
-            if (intent.getBooleanExtra(EndpointService.ERROR, true)) {
-                Log.e("AppActivity", "Registration to GCM failed");
-            } else {
-                Log.e("AppActivity", "Registration to GCM was successfull");
-                tunnel.getService().onRegistered();
-            }
         }
     }
 

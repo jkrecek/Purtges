@@ -7,8 +7,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.frca.purtges.AppActivity;
-import com.frca.purtges.EndpointService;
+import com.frca.purtges.activities.AppActivity;
+import com.frca.purtges.services.EndpointService;
 
 /**
  * Created by Frca on 26.7.13.
@@ -49,6 +49,11 @@ public class EndpointTunnel {
         return instance;
     }
 
+    // usage should be avoided
+    public static EndpointTunnel getInstance() {
+        return instance;
+    }
+
     public void doBindService() {
         activity.bindService(new Intent(activity,
                 EndpointService.class), connection, Context.BIND_AUTO_CREATE);
@@ -71,7 +76,7 @@ public class EndpointTunnel {
     }
 
     public boolean isActive() {
-        return instance != null && isActive;
+        return activity != null && service != null && isActive;
     }
 
     public void setActive(boolean active) {

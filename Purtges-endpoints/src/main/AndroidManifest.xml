@@ -4,8 +4,8 @@
           android:versionName="1.0">
 
     <uses-sdk
-            android:minSdkVersion="15"
-            android:targetSdkVersion="15"/>
+            android:minSdkVersion="8"
+            android:targetSdkVersion="18"/>
 
     <permission
             android:name="com.frca.purtges.permission.C2D_MESSAGE"
@@ -20,8 +20,8 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
     <application>
-        <service android:name="com.frca.purtges.EndpointService" />
-        <service android:name="com.frca.purtges.GCMIntentService" />
+        <service android:name=".services.EndpointService" />
+        <service android:name=".services.GCMIntentService" />
         <receiver
                 android:name="com.google.android.gcm.GCMBroadcastReceiver"
                 android:permission="com.google.android.c2dm.permission.SEND">

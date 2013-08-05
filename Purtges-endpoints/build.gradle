@@ -14,10 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile files('libs/gcm.jar')/* n ,
-            'libs/google-play-services.jar')/*,
-            'libs/android-support-v4.jar',
-            'libs/android-support-v7-appcompat.jar')*/
+    compile files('libs/gcm.jar')
     compile project(':Purtges-Const')
     compile ('com.google.api-client:google-api-client-android:1.15.0-rc') {
         exclude group: 'com.google.android.google-play-services'
@@ -31,12 +28,12 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 17
+    compileSdkVersion 18
     buildToolsVersion "17"
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 15
+        minSdkVersion 8
+        targetSdkVersion 18
     }
 
     sourceSets {

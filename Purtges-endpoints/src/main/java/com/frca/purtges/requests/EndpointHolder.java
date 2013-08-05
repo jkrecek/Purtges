@@ -1,6 +1,6 @@
 package com.frca.purtges.requests;
 
-import com.frca.purtges.CloudEndpointUtils;
+import com.frca.purtges.helpers.CloudEndpointUtils;
 import com.frca.purtges.teamendpoint.Teamendpoint;
 import com.frca.purtges.teammessagesendpoint.Teammessagesendpoint;
 import com.frca.purtges.teamtimerendpoint.Teamtimerendpoint;

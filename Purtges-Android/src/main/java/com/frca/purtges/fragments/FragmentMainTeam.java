@@ -11,7 +11,7 @@ import com.frca.purtges.R;
 import com.frca.purtges.adapters.SectionsPagerAdapter;
 
 public class FragmentMainTeam extends Fragment {
-    public static final String ARG_SECTION_NUMBER = "section_number";
+    //public static final String ARG_SECTION_NUMBER = "section_number";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -28,7 +28,8 @@ public class FragmentMainTeam extends Fragment {
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
 
         if (mViewPager != null) {
-            mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager(), getResources());
+            if (mSectionsPagerAdapter == null)
+                mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager(), getResources());
 
             mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
             mViewPager.setAdapter(mSectionsPagerAdapter);

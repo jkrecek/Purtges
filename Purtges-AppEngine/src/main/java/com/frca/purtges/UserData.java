@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class UserData {
@@ -22,6 +23,9 @@ public class UserData {
 
     @Basic
     private List<String> deviceIds = new ArrayList<String>();
+
+    @ManyToMany
+    private List<TeamData> teams = new ArrayList<TeamData>();
 
     public Long getId() {
         return id;
@@ -53,5 +57,13 @@ public class UserData {
 
     public void setDeviceIds(List<String> deviceIds) {
         this.deviceIds = deviceIds;
+    }
+
+    public List<TeamData> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<TeamData> teams) {
+        this.teams = teams;
     }
 }

@@ -1,4 +1,4 @@
-package com.frca.purtges;
+package com.frca.purtges.services;
 
 import android.app.AlertDialog;
 import android.app.Service;
@@ -6,14 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frca.purtges.helpers.Result;
@@ -22,7 +18,6 @@ import com.frca.purtges.requests.callbacks.ResultCallback;
 import com.frca.purtges.tunnel.EndpointTunnel;
 import com.frca.purtges.userdataendpoint.model.UserData;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -103,11 +98,17 @@ public class EndpointService extends Service {
         } else {
             appendText("Registering into GCM");
             if (GCMIntentService.register(this))
-                onRegistered();
+                onGCMResult(false);
         }
     }
 
-    public void onRegistered() {
+    public void onGCMResult(boolean error) {
+
+        if (error) {
+            appendText("Error when registering into GCM");
+            finish();
+            return;
+        }
 
         appendText("Registering device in endpoints");
         requestMgr.getOwnUserData(new ResultCallback() {
@@ -116,6 +117,7 @@ public class EndpointService extends Service {
                 if (result == Result.ERROR) {
                     appendText("User not yet created, creting new one");
                     appendText("User must select displayName");
+                    handleCreatingOfUser();
                 } else {
                     appendText("User exists, registering now");
                     registerDevice((UserData) result);
@@ -125,9 +127,9 @@ public class EndpointService extends Service {
     }
 
     protected void registerDevice(UserData userData) {
-        List<String> deviceIds = userData.getDeviceIds();
         String registration = GCMIntentService.getDeviceId(this);
 
+        List<String> deviceIds = userData.getDeviceIds();
         if (deviceIds == null)
             deviceIds = new ArrayList<String>();
 
@@ -168,7 +170,7 @@ public class EndpointService extends Service {
             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    EndpointService.this.appendText("Display Name selected, registring to endpoint!");
+                    appendText("Display Name selected, registring to endpoint!");
 
                     UserData userData = new UserData();
                     userData.setDisplayName(input.getText().toString());
@@ -201,11 +203,9 @@ public class EndpointService extends Service {
     }
 
     public void appendText(final String text) {
-        if (tunnel == null || tunnel.isActive())
-            return;
-
-        Log.d("LOG_APPEND", text);
-        tunnel.getActivity().appendText(text);
+        Log.d("LOG_APPEND", tunnel.isActive() ? text : "'Tunnel down!': " + text);
+        if (tunnel.isActive())
+            tunnel.getActivity().appendText(text);
     }
 
     public void onDeviceRegSaved() {

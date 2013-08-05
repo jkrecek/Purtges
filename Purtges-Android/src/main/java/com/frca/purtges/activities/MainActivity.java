@@ -1,7 +1,6 @@
-package com.frca.purtges;
+package com.frca.purtges.activities;
 
 import android.app.ActionBar;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -14,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.frca.purtges.R;
+import com.frca.purtges.activities.AppActivity;
 import com.frca.purtges.adapters.DrawerAdapter;
 import com.frca.purtges.fragments.FragmentLog;
 import com.frca.purtges.fragments.FragmentMainTeam;
@@ -64,16 +65,15 @@ public class MainActivity extends AppActivity {
                 mTitle = header.getText();
 
                 if (mTitle.equals(getString(R.string.register))) {
-                    startActivity(new Intent(MainActivity.this, EndpointService.class));
+                    //startActivity(new Intent(MainActivity.this, EndpointService.class));
                     //GCMIntentService.register(MainActivity.this);
                 } else if (mTitle.equals(getString(R.string.checker))) {
-                    Intent special = new Intent(MainActivity.this, EndpointService.class);
-                    special.putExtra(EndpointService.SPECIAL, EndpointService.SPECIAL_ID);
-                    startActivity(special);
-                }
+                    // Intent special = new Intent(MainActivity.this, EndpointService.class);
+                    //special.putExtra(EndpointService.SPECIAL, EndpointService.SPECIAL_ID);
+                    //startActivity(special);
+                } else
+                    bar.setTitle(mTitle);
 
-
-                bar.setTitle(mTitle);
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
@@ -157,7 +157,6 @@ public class MainActivity extends AppActivity {
             items.add(new DrawerAdapter.DrawerItem(getString(R.string.teams_manage), android.R.drawable.ic_menu_manage));
             items.add(new DrawerAdapter.DrawerItem(getString(R.string.register), android.R.drawable.ic_menu_save));
             items.add(new DrawerAdapter.DrawerItem(getString(R.string.checker), android.R.drawable.ic_menu_manage));
-
 
             DrawerAdapter.DrawerItem[] arrItems = items.toArray(new DrawerAdapter.DrawerItem[items.size()]);
             adapter = new DrawerAdapter(this, R.layout.item_drawer, arrItems);

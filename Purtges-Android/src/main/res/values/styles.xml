@@ -1,7 +1,8 @@
 <resources>
 
     <!--parent="@style/Theme.AppCompat.Light"-->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar"> </style>
+    <!--<style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar"> </style>-->
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light"> </style>
 
     <style name="AppTheme" parent="AppBaseTheme"> </style>
 

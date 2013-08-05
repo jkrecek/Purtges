@@ -1,4 +1,4 @@
-package com.frca.purtges;
+package com.frca.purtges.helpers;
 
 import android.app.Activity;
 import android.util.Log;

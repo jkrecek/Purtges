@@ -20,6 +20,7 @@
     <string name="drawer_open">Opening ...</string>
     <string name="drawer_close">Closing ...</string>
 
+    <string name="section_title_log">Log</string>
     <string name="section_title_data">Data</string>
     <string name="section_title_list">Seznam</string>
     <string name="navigation">Navigation</string>
