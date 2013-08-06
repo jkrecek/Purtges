@@ -6,19 +6,27 @@ buildscript {
         classpath 'com.android.tools.build:gradle:0.5+'
     }
 }
+
 apply plugin: 'android'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    //compile files('libs/android-support-v4.jar')
+    compile project(':Purtges-endpoints')
+    compile 'com.android.support:support-v4:18.0.+'
+    compile 'com.android.support:appcompat-v7:18.0.+'
+    compile 'com.google.android.gms:play-services:3.1.36+'
 }
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "17.0.0"
+    buildToolsVersion "18.0.1"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 15
+        targetSdkVersion 18
     }
 }
 
@@ -26,13 +34,5 @@ task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
     gradleVersion = '1.6'
 }
 
-repositories {
-  mavenCentral()
-}
 
-dependencies {
-  compile project(':Purtges-endpoints')
-  compile 'com.android.support:support-v4:18.0.+'
-  compile 'com.android.support:appcompat-v7:18.0.+'
-  compile 'com.google.android.gms:play-services:3.1.36+'
-}
+
