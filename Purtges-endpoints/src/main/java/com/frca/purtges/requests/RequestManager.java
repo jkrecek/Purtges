@@ -61,38 +61,41 @@ public class RequestManager {
             workingThread.start();
     }
 
+    private void addTask(QueryTask queryTask, ResultCallback resultCallback) {
+        addTask(new NetworkTask(queryTask, resultCallback));
+    }
 
     public void getOwnUserData(ResultCallback callback) {
         getUserData(Long.valueOf(0), callback);
     }
 
     public void getUserData(final Long id, ResultCallback callback) {
-        addTask(new NetworkTask(new QueryTask() {
+        addTask(new QueryTask() {
             @Override
             public Object query() throws Exception {
                 return endpoints.userData().getUserData(id).execute();
             }
-        }, callback));
+        }, callback);
     }
 
     public void insertUserData(final UserData userData, ResultCallback callback) {
-        addTask(new NetworkTask(new QueryTask() {
+        addTask(new QueryTask() {
 
             @Override
             public Object query() throws Exception {
                 return endpoints.userData().insertUserData(userData).execute();
             }
-        }, callback));
+        }, callback);
     }
 
     public void updateUserData(final UserData userData, ResultCallback callback) {
-        addTask(new NetworkTask(new QueryTask() {
+        addTask(new QueryTask() {
 
             @Override
             public Object query() throws Exception {
                 return endpoints.userData().updateUserData(userData).execute();
             }
-        }, callback));
+        }, callback);
     }
 
     public String getCurrentMethodName() {
