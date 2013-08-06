@@ -11,9 +11,6 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.json.jackson.JacksonFactory;
 
-/**
- * Created by Frca on 11.7.13.
- */
 public class EndpointHolder {
 
     private GoogleAccountCredential credential = null;

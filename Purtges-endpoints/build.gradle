@@ -16,7 +16,7 @@ repositories {
 dependencies {
     compile files('libs/gcm.jar')
     compile project(':Purtges-Const')
-    compile ('com.google.api-client:google-api-client-android:1.15.0-rc') {
+    compile ('com.google.api-client:google-api-client-android:1.15.0-rc+') {
         exclude group: 'com.google.android.google-play-services'
     }
 

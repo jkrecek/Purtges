@@ -70,17 +70,17 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Purtges-Const" exported="" />
     <orderEntry type="library" exported="" name="jsr305-1.3.9" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-1.15.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-oauth-client-1.15.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-1.15.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-android-1.15.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-api-client-android-1.15.0-rc" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-asl-1.9.11" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-jackson-1.15.0-rc" level="project" />
     <orderEntry type="library" exported="" name="gcm" level="project" />
-    <orderEntry type="module" module-name="Purtges-Const" exported="" />
-    <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
     <orderEntry type="library" exported="" name="ComAndroidSupportAppcompatV71800.aar" level="project" />
     <orderEntry type="library" exported="" name="ComGoogleAndroidGmsPlayServices3136.aar" level="project" />
   </component>

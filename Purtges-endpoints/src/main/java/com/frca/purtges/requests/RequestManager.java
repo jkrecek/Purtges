@@ -13,13 +13,13 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 
 public class RequestManager {
 
-    private GoogleAccountCredential credential;
+    private final GoogleAccountCredential credential;
 
-    private EndpointHolder endpoints;
+    private final EndpointHolder endpoints;
 
-    private NetworkRunnable networkRunnable = new NetworkRunnable();
+    private final NetworkRunnable networkRunnable = new NetworkRunnable();
 
-    private Thread workingThread = new Thread(networkRunnable);
+    private final Thread workingThread = new Thread(networkRunnable);
 
     public RequestManager(Activity activity, String selectedAccount) {
         credential = GoogleAccountCredential.usingAudience(activity, Ids.AUDIENCE_SCOPE);
