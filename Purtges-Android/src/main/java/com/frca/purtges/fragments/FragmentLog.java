@@ -13,11 +13,12 @@ import com.frca.purtges.R;
  * Created by Frca on 28.7.13.
  */
 public class FragmentLog extends Fragment {
-    public static final String ARG_SECTION_NUMBER = "section_number";
 
     private TextView mStatus = null;
     private TextView mLog = null;
 
+    private String log = "";
+    private String currentStatus;
     public FragmentLog() {
     }
 
@@ -27,18 +28,22 @@ public class FragmentLog extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_log, container, false);
 
         mStatus = (TextView) rootView.findViewById(R.id.text);
+        mStatus.setText(currentStatus);
 
         mLog = (TextView) rootView.findViewById(R.id.text_content);
+        mLog.setText(log);
 
         return rootView;
     }
 
     public void appendText(final String text) {
+        log += "\n --" + text;
+        currentStatus = text;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mLog.setText(mLog.getText().toString() + "\n --" + text);
-                mStatus.setText(text);
+                mLog.setText(log);
+                mStatus.setText(currentStatus);
             }
         });
     }
