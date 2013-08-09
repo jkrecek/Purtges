@@ -2,89 +2,91 @@ package com.frca.purtges;
 
 import com.frca.purtges.Const.Ids;
 import com.frca.purtges.helpers.Method;
+import com.frca.purtges.helpers.Values;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.appengine.api.datastore.Key;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 
 @Api(
-    name = "teamtimerendpoint",
+    name = "teamdataendpoint",
     namespace = @ApiNamespace(ownerDomain = "frca.com", ownerName = "frca.com", packagePath = Ids.PACKAGE_NAME),
     clientIds = {Ids.WEB_CLIENT_ID, Ids.ANDROID_CLIENT_ID},
     audiences = {Ids.ANDROID_AUDIENCE}
 )
-public class TeamTimerEndpoint {
+public class TeamDataEndpoint {
 
-    @ApiMethod(name = "getTeamTimer")
-    public TeamTimer getTeamTimer(Key id) throws IOException  {
+    @ApiMethod(name = "getTeamData")
+    public TeamData getTeamData(Key id) throws IOException {
         EntityManager mgr = getEntityManager();
-        TeamTimer teamTimer = null;
+        TeamData teamData = null;
         try {
             id = Method.checkKey(id);
-            teamTimer = mgr.find(TeamTimer.class, id);
+            teamData = mgr.find(TeamData.class, id);
         } finally {
             mgr.close();
         }
-        return teamTimer;
+        return teamData;
     }
 
-    @ApiMethod(name = "insertTeamTimer")
-    public TeamTimer insertTeamTimer(TeamTimer teamTimer) throws IOException {
+    @ApiMethod(name = "insertTeamData")
+    public TeamData insertTeamData(TeamData teamData) throws IOException  {
         EntityManager mgr = getEntityManager();
         try {
-            teamTimer = Method.checkKeyEntity(teamTimer);
-
-            if (containsTeamTimer(teamTimer)) {
+            Values.log.log(Level.SEVERE, "PUSHING");
+            teamData = Method.checkKeyEntity(teamData);
+            Values.log.log(Level.SEVERE, "CONTINUING");
+            if (containsTeamData(teamData)) {
                 throw new EntityExistsException("Object already exists");
             }
-            mgr.persist(teamTimer);
+            mgr.persist(teamData);
         } finally {
             mgr.close();
         }
-        return teamTimer;
+        return teamData;
     }
 
-    @ApiMethod(name = "updateTeamTimer")
-    public TeamTimer updateTeamTimer(TeamTimer teamTimer) throws IOException {
+    @ApiMethod(name = "updateTeamData")
+    public TeamData updateTeamData(TeamData teamData) throws IOException {
         EntityManager mgr = getEntityManager();
         try {
-            teamTimer = Method.checkKeyEntity(teamTimer);
-
-            if (!containsTeamTimer(teamTimer)) {
+            teamData = Method.checkKeyEntity(teamData);
+            if (!containsTeamData(teamData)) {
                 throw new EntityNotFoundException("Object does not exist");
             }
-            mgr.persist(teamTimer);
+            mgr.persist(teamData);
         } finally {
             mgr.close();
         }
-        return teamTimer;
+        return teamData;
     }
 
-    @ApiMethod(name = "removeTeamTimer")
-    public TeamTimer removeTeamTimer(Key id) throws IOException {
+    @ApiMethod(name = "removeTeamData")
+    public TeamData removeTeamData(Key id) throws IOException {
         EntityManager mgr = getEntityManager();
-        TeamTimer teamTimer = null;
+        TeamData teamData = null;
         try {
             id = Method.checkKey(id);
-            teamTimer = mgr.find(TeamTimer.class, id);
-            mgr.remove(teamTimer);
+            teamData = mgr.find(TeamData.class, id);
+            mgr.remove(teamData);
         } finally {
             mgr.close();
         }
-        return teamTimer;
+        return teamData;
     }
 
-    private boolean containsTeamTimer(TeamTimer teamTimer) {
+    private boolean containsTeamData(TeamData teamData) throws IOException {
         EntityManager mgr = getEntityManager();
         boolean contains = true;
         try {
-            TeamTimer item = mgr.find(TeamTimer.class, teamTimer.getId());
+            TeamData item = mgr.find(TeamData.class, teamData.getId());
             if (item == null) {
                 contains = false;
             }

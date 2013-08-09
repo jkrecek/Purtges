@@ -1,24 +1,20 @@
 package com.frca.purtges;
 
 import com.frca.purtges.Const.Ids;
+import com.frca.purtges.helpers.Method;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.server.spi.response.CollectionResponse;
-import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
-import com.google.appengine.datanucleus.query.JPACursorHelper;
 
-import java.util.List;
+import java.io.IOException;
 
-import javax.annotation.Nullable;
-import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -31,54 +27,13 @@ import javax.persistence.criteria.Root;
 )
 public class UserDataEndpoint {
 
-    @SuppressWarnings({"unchecked", "unused"})
-    @ApiMethod(name = "listUserData")
-    public CollectionResponse<UserData> listUserData(
-        @Nullable @Named("cursor") String cursorString,
-        @Nullable @Named("limit") Integer limit) {
-
-        EntityManager mgr = null;
-        List<UserData> execute = null;
-
-        try {
-            mgr = getEntityManager();
-            Query query = mgr.createQuery("select from UserData as UserData");
-            Cursor cursor;
-            if (cursorString != null && cursorString.trim().length() > 0) {
-                cursor = Cursor.fromWebSafeString(cursorString);
-                query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
-            }
-
-            if (limit != null) {
-                query.setFirstResult(0);
-                query.setMaxResults(limit);
-            }
-
-            execute = (List<UserData>) query.getResultList();
-            cursor = JPACursorHelper.getCursor(execute);
-            if (cursor != null) cursorString = cursor.toWebSafeString();
-
-            // Tight loop for fetching all entities from datastore and accomodate
-            // for lazy fetch.
-            for (UserData obj : execute) ;
-        } finally {
-            if (mgr != null) {
-                mgr.close();
-            }
-        }
-
-        return CollectionResponse.<UserData>builder()
-            .setItems(execute)
-            .setNextPageToken(cursorString)
-            .build();
-    }
-
     @ApiMethod(name = "getUserData")
-    public UserData getUserData(@Named("id") Long id, User user) throws OAuthRequestException {
+    public UserData getUserData(Key id, User user) throws OAuthRequestException, IOException {
         EntityManager mgr = getEntityManager();
         UserData userData = null;
         try {
-            if (id == 0)
+            id = Method.checkKey(id);
+            if (id.getId() == 0)
                 userData = findUserData(user);
             else
                 userData = mgr.find(UserData.class, id);
@@ -90,9 +45,10 @@ public class UserDataEndpoint {
     }
 
     @ApiMethod(name = "insertUserData")
-    public UserData insertUserData(UserData userData, User user) throws OAuthRequestException {
+    public UserData insertUserData(UserData userData, User user) throws OAuthRequestException, IOException {
         EntityManager mgr = getEntityManager();
         try {
+            userData = Method.checkKeyEntity(userData);
             if (!userData.getEmail().equals(user.getEmail()))
                 throw new OAuthRequestException("Wrong user");
 
@@ -108,9 +64,10 @@ public class UserDataEndpoint {
     }
 
     @ApiMethod(name = "updateUserData")
-    public UserData updateUserData(UserData userData, User user) throws OAuthRequestException {
+    public UserData updateUserData(UserData userData, User user) throws OAuthRequestException, IOException {
         EntityManager mgr = getEntityManager();
         try {
+            userData = Method.checkKeyEntity(userData);
             if (!userData.getEmail().equals(user.getEmail()))
                 throw new OAuthRequestException("Wrong user");
 
@@ -125,10 +82,11 @@ public class UserDataEndpoint {
     }
 
     @ApiMethod(name = "removeUserData")
-    public UserData removeUserData(@Named("id") Long id) {
+    public UserData removeUserData(Key id) throws IOException {
         EntityManager mgr = getEntityManager();
         UserData userData = null;
         try {
+            id = Method.checkKey(id);
             userData = mgr.find(UserData.class, id);
             mgr.remove(userData);
         } finally {

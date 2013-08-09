@@ -1,6 +1,7 @@
 package com.frca.purtges;
 
-import java.util.ArrayList;
+import com.google.appengine.api.datastore.Key;
+
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -9,29 +10,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class UserData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Key id;
 
     private String email;
 
     private String displayName;
 
     @Basic
-    private List<String> deviceIds = new ArrayList<String>();
+    private List<String> deviceIds;// = new ArrayList<String>();
 
     @ManyToMany
-    private List<TeamData> teams = new ArrayList<TeamData>();
+    private List<TeamData> teams;// = new ArrayList<TeamData>();
 
-    public Long getId() {
+    @OneToMany(mappedBy="userData")
+    private List<UserTimerAssociation> timers;// = new ArrayList<TeamTimer>();
+
+    public Key getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Key id) {
         this.id = id;
     }
 
@@ -65,5 +70,13 @@ public class UserData {
 
     public void setTeams(List<TeamData> teams) {
         this.teams = teams;
+    }
+
+    public List<UserTimerAssociation> getTimers() {
+        return timers;
+    }
+
+    public void setTimers(List<UserTimerAssociation> timers) {
+        this.timers = timers;
     }
 }

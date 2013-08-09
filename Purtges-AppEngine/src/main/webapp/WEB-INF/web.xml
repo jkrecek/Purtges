@@ -4,7 +4,7 @@
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
   <init-param>
    <param-name>services</param-name>
-   <param-value>com.frca.purtges.TeamEndpoint,com.frca.purtges.TeamMessagesEndpoint,com.frca.purtges.TeamTimerEndpoint,com.frca.purtges.UserDataEndpoint,com.frca.purtges.UserTeamEndpoint,com.frca.purtges.UserTimerEndpoint</param-value>
+   <param-value>com.frca.purtges.TeamDataEndpoint,com.frca.purtges.TeamTimerEndpoint,com.frca.purtges.UserDataEndpoint</param-value>
   </init-param>
  </servlet>
  <servlet-mapping>

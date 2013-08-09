@@ -1,13 +1,19 @@
 package com.frca.purtges;
 
+import com.frca.purtges.helpers.Values;
+import com.google.appengine.api.datastore.Key;
+
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 /**
@@ -20,38 +26,33 @@ public class TeamTimer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "timer")
-    private int id;
+    private Key id;
 
-    @OneToOne
-    @MapsId
-    private TeamData team;
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="TEAM_ID")
+    private TeamData teamData;
 
     private Date time;
 
-    @OneToOne
-    @MapsId
-    private UserData author;
-
     private String cancelReason;
 
-    @OneToOne
-    @MapsId
-    private UserData cancelAuthor;
+    @OneToMany(mappedBy="teamTimer")
+    private List<UserTimerAssociation> users;
 
-    public int getId() {
+    public Key getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Key id) {
         this.id = id;
     }
 
-    public TeamData getTeam() {
-        return team;
+    public TeamData getTeamData() {
+        return teamData;
     }
 
-    public void setTeam(TeamData team) {
-        this.team = team;
+    public void setTeamData(TeamData teamData) {
+        this.teamData = teamData;
     }
 
     public Date getTime() {
@@ -62,14 +63,6 @@ public class TeamTimer {
         this.time = time;
     }
 
-    public UserData getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(UserData author) {
-        this.author = author;
-    }
-
     public String getCancelReason() {
         return cancelReason;
     }
@@ -78,11 +71,24 @@ public class TeamTimer {
         this.cancelReason = cancelReason;
     }
 
-    public UserData getCancelAuthor() {
-        return cancelAuthor;
+    public List<UserTimerAssociation> getUsers() {
+        return users;
     }
 
-    public void setCancelAuthor(UserData cancelAuthor) {
-        this.cancelAuthor = cancelAuthor;
+    public void setUsers(List<UserTimerAssociation> users) {
+        this.users = users;
+    }
+
+    public void adduser(UserData userData) {
+        UserTimerAssociation association = new UserTimerAssociation();
+        association.setUserData(userData);
+        association.setTeamTimer(this);
+        association.setUserId(userData.getId().getId());
+        association.setTimerId(this.getId().getId());
+        association.setState(Values.State.NOT_RESPONDED);
+        association.setReason(null);
+
+        this.getUsers().add(association);
+        userData.getTimers().add(association);
     }
 }

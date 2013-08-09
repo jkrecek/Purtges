@@ -1,24 +1,24 @@
 package com.frca.purtges;
 
-import java.util.ArrayList;
+import com.google.appengine.api.datastore.Key;
+
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.TableGenerator;
 
 @Entity
 public class TeamData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="TEAMDATA_ID")
+    private Key id;
 
     private String name;
 
@@ -26,19 +26,17 @@ public class TeamData {
 
     private int gameType;
 
-    @ManyToMany
-    private List<TeamTimer> timers = new ArrayList<TeamTimer>();
+    @OneToMany(mappedBy="teamData")
+    private List<TeamTimer> timers;// = new ArrayList<TeamTimer>();
 
     @ManyToMany
-    private List<UserData> users = new ArrayList<UserData>();
+    private List<UserData> users;// = new ArrayList<UserData>();
 
-    private UserData admin;
-
-    public Long getId() {
+    public Key getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Key id) {
         this.id = id;
     }
 
@@ -80,13 +78,5 @@ public class TeamData {
 
     public void setUsers(List<UserData> users) {
         this.users = users;
-    }
-
-    public UserData getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(UserData admin) {
-        this.admin = admin;
     }
 }
