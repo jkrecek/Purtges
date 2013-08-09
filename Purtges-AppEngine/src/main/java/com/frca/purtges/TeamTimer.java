@@ -36,7 +36,7 @@ public class TeamTimer {
 
     private String cancelReason;
 
-    @OneToMany(mappedBy="teamTimer")
+    @OneToMany
     private List<UserTimerAssociation> users;
 
     public Key getId() {

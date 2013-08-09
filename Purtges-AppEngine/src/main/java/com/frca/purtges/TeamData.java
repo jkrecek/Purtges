@@ -26,7 +26,7 @@ public class TeamData {
 
     private int gameType;
 
-    @OneToMany(mappedBy="teamData")
+    @OneToMany
     private List<TeamTimer> timers;// = new ArrayList<TeamTimer>();
 
     @ManyToMany
