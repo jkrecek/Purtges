@@ -20,7 +20,6 @@
 
     <application>
         <service android:name=".services.EndpointService" />
-        <service android:name=".services.GCMIntentService" />
         <receiver
                 android:name="com.google.android.gcm.GCMBroadcastReceiver"
                 android:permission="com.google.android.c2dm.permission.SEND">

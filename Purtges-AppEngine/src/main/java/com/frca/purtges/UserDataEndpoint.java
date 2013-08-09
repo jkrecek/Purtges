@@ -27,8 +27,8 @@ import javax.persistence.criteria.Root;
 )
 public class UserDataEndpoint {
 
-    @ApiMethod(name = "getUserData")
-    public UserData getUserData(Key id, User user) throws OAuthRequestException, IOException {
+    @ApiMethod(name = "claimUserData")
+    public UserData claimUserData(Key id, User user) throws OAuthRequestException, IOException {
         EntityManager mgr = getEntityManager();
         UserData userData = null;
         try {

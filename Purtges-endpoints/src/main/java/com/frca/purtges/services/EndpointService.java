@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.frca.purtges.gcm.Gcm;
 import com.frca.purtges.helpers.Result;
 import com.frca.purtges.requests.RequestManager;
 import com.frca.purtges.requests.callbacks.ResultCallback;
@@ -36,6 +37,8 @@ public class EndpointService extends Service {
     private SharedPreferences settings = null;
 
     private RequestManager requestMgr = null;
+
+    private Gcm gcm = null;
 
     public class LocalBinder extends Binder {
         public EndpointService getService() {
@@ -72,8 +75,6 @@ public class EndpointService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        GCMIntentService.onDestroy(this);
     }
 
     @Override
@@ -97,8 +98,12 @@ public class EndpointService extends Service {
             finish();
         } else {
             appendText("Registering into GCM");
-            if (GCMIntentService.register(this))
-                onGCMResult(false);
+            gcm = new Gcm(this, new Runnable() {
+                @Override
+                public void run() {
+                    onGCMResult(false);
+                }
+            });
         }
     }
 
@@ -106,7 +111,6 @@ public class EndpointService extends Service {
 
         if (error) {
             appendText("Error when registering into GCM");
-            finish();
             return;
         }
 
@@ -127,7 +131,7 @@ public class EndpointService extends Service {
     }
 
     protected void registerDevice(UserData userData) {
-        String registration = GCMIntentService.getDeviceId(this);
+        String registration = gcm.getRegid();
 
         List<String> deviceIds = userData.getDeviceIds();
         if (deviceIds == null)

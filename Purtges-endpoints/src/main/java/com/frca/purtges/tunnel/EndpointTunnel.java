@@ -27,12 +27,10 @@ public class EndpointTunnel {
         public void onServiceConnected(ComponentName className, IBinder binder) {
             service = ((EndpointService.LocalBinder)binder).getService();
             service.binding(EndpointTunnel.this);
-            Log.e("LOG", "binded");
         }
 
         public void onServiceDisconnected(ComponentName className) {
             service = null;
-            Log.e("LOG", "disconnected");
         }
     };
 
@@ -55,8 +53,7 @@ public class EndpointTunnel {
     }
 
     public void doBindService() {
-        activity.bindService(new Intent(activity,
-                EndpointService.class), connection, Context.BIND_AUTO_CREATE);
+        activity.bindService(new Intent(activity, EndpointService.class), connection, Context.BIND_AUTO_CREATE);
         isBound = true;
     }
 

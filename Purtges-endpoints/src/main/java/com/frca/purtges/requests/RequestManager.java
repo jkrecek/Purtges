@@ -66,14 +66,16 @@ public class RequestManager {
     }
 
     public void getOwnUserData(ResultCallback callback) {
-        getUserData(Long.valueOf(0), callback);
+        com.frca.purtges.userdataendpoint.model.Key key = new com.frca.purtges.userdataendpoint.model.Key();
+        key.setId(Long.valueOf(0));
+        getUserData(key, callback);
     }
 
-    public void getUserData(final Long id, ResultCallback callback) {
+    public void getUserData(final com.frca.purtges.userdataendpoint.model.Key id, ResultCallback callback) {
         addTask(new QueryTask() {
             @Override
             public Object query() throws Exception {
-                return endpoints.userData().getUserData(id).execute();
+                return endpoints.userData().claimUserData(id).execute();
             }
         }, callback);
     }
