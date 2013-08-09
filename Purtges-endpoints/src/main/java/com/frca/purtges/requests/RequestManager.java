@@ -102,6 +102,6 @@ public class RequestManager {
 
     public String getCurrentMethodName() {
         final StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-        return ste[4].getMethodName();
+        return ste[5].getMethodName();
     }
 }
