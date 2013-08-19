@@ -17,7 +17,7 @@ dependencies {
     compile project(':Purtges-endpoints')
     compile 'com.android.support:support-v4:18.0.+'
     compile 'com.android.support:appcompat-v7:18.0.+'
-    compile 'com.google.android.gms:play-services:3+'
+    compile 'com.google.android.gms:play-services:3.2.25+'
 }
 
 android {
@@ -31,7 +31,7 @@ android {
 }
 
 task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
-    gradleVersion = '1.6'
+    gradleVersion = '1.7'
 }
 
 
